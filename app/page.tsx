@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -143,8 +144,8 @@ export default function PlantMDLanding() {
               <br />
               <span className="text-[#054714]">with PlantMD</span>
             </h1>
+            <Link href="/scan">
             <Button
-              onClick={handleComingSoon}
               className="bg-[#011606] hover:bg-gray-800 text-white px-6 sm:px-8 py-3 text-base sm:text-lg rounded-full animate-bounce-slow hover:scale-105 transition-all duration-300"
             >
               <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
@@ -153,6 +154,7 @@ export default function PlantMDLanding() {
               </svg>
               Try it now
             </Button>
+            </Link>
           </div>
         </div>
       </section>
