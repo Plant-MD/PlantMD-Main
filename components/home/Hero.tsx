@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ShowcaseSection() {
+export default function ShowHeroSection() {
   return (
     <section className="relative px-4 sm:px-6 py-8 sm:py-16 max-w-7xl mx-auto overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-6 lg:gap-12">
