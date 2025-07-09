@@ -27,34 +27,6 @@ export default function PlantMDLanding() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 sm:px-6 py-4 max-w-7xl mx-auto">
-        <div className="text-xl sm:text-2xl font-bold text-gray-900">Plant MD</div>
-        <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-          <button onClick={handleComingSoon} className="text-gray-600 hover:text-gray-900 transition-colors">
-            About Us
-          </button>
-          <button onClick={handleComingSoon} className="text-gray-600 hover:text-gray-900 transition-colors">
-            Tutorial
-          </button>
-          <button onClick={handleComingSoon} className="text-gray-600 hover:text-gray-900 transition-colors">
-            Contact
-          </button>
-          <Button onClick={handleComingSoon} className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6">
-            Dashboard
-          </Button>
-        </nav>
-
-        {/* Mobile menu button */}
-        <button onClick={handleComingSoon} className="md:hidden p-2">
-          <div className="w-6 h-6 flex flex-col justify-center space-y-1">
-            <div className="w-full h-0.5 bg-gray-900"></div>
-            <div className="w-full h-0.5 bg-gray-900"></div>
-            <div className="w-full h-0.5 bg-gray-900"></div>
-          </div>
-        </button>
-      </header>
-
       {/* Hero Section */}
       <section className="relative px-4 sm:px-6 py-8 sm:py-16 max-w-7xl mx-auto overflow-hidden">
         <div className="flex flex-col items-center justify-center gap-6 lg:gap-12">
@@ -82,7 +54,7 @@ export default function PlantMDLanding() {
               {/* Left notification - positioned outside with green gradient */}
               <div className="absolute -left-28 sm:-left-36 top-12 bg-gradient-to-r from-green-400 to-green-600 rounded-2xl shadow-xl p-4 flex items-center space-x-3 max-w-xs z-20 animate-bounce-slow">
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">👨‍🌾</span>
+                  <span className="text-2xl">🌿</span>
                 </div>
                 <div className="text-sm text-white">
                   <p className="font-semibold">This has a lot of potential</p>
@@ -96,10 +68,10 @@ export default function PlantMDLanding() {
                   <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <linearGradient id="arrowFillGradient" x1="0" y1="0" x2="91" y2="0" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="#011606">
+                        <stop offset="0%" stopColor="#011606">
                           <animate attributeName="offset" values="0;1" dur="2s" repeatCount="indefinite" />
                         </stop>
-                        <stop offset="0%" stop-color="#b6e7c9">
+                        <stop offset="0%" stopColor="#b6e7c9">
                           <animate attributeName="offset" values="0.01;1" dur="2s" repeatCount="indefinite" />
                         </stop>
                       </linearGradient>
@@ -130,7 +102,7 @@ export default function PlantMDLanding() {
                   <p className="text-green-100 text-xs font-bold">Superr Franky</p>
                 </div>
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">👨‍🌾</span>
+                  <span className="text-2xl">🌿</span>
                 </div>
               </div>
             </div>
@@ -144,23 +116,22 @@ export default function PlantMDLanding() {
               <br />
               <span className="text-[#054714]">with PlantMD</span>
             </h1>
-            <Link href="/scan">
-            <Button
-              className="bg-[#011606] hover:bg-gray-800 text-white px-6 sm:px-8 py-3 text-base sm:text-lg rounded-full animate-bounce-slow hover:scale-105 transition-all duration-300"
-            >
-              <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-                <path d="M13 5v14l11-7z" />
-              </svg>
-              Try it now
-            </Button>
+            <Link href="/scan" passHref>
+              <Button
+                className="bg-[#011606] hover:bg-gray-800 text-white px-6 sm:px-8 py-3 text-base sm:text-lg rounded-full animate-bounce-slow hover:scale-105 transition-all duration-300"
+              >
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                Try it now
+              </Button>
             </Link>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="bg-green-50 px-4 sm:px-6 py-8 sm:py-16">
+      <section id="about" className="bg-green-50 px-4 sm:px-6 py-8 sm:py-16">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">About Plant MD</h2>
           <p className="text-base sm:text-lg text-gray-600 mb-8 sm:mb-12 leading-relaxed px-4">
@@ -263,7 +234,7 @@ export default function PlantMDLanding() {
       </section>
 
       {/* Using The App Section */}
-      <section className="bg-gray-50 px-4 sm:px-6 py-8 sm:py-16">
+      <section className="bg-gray-50 px-4 sm:px-6 py-8 sm:py-16" id="tutorial">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8 sm:mb-12">Using The App</h2>
 
@@ -330,7 +301,6 @@ export default function PlantMDLanding() {
         </div>
       </section>
 
-      {/* Video Section */}
       <section className="px-4 sm:px-6 py-8 sm:py-16">
         <div className="max-w-4xl mx-auto">
           <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden">
@@ -354,91 +324,7 @@ export default function PlantMDLanding() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="bg-plant-dark px-4 sm:px-6 py-8 sm:py-16">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-8 sm:mb-12">Get In Touch</h2>
-
-          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 items-start">
-            {/* Contact Form */}
-            <div className="space-y-4 sm:space-y-6">
-              <Input placeholder="Your Full Name" className="bg-white border-0 h-12 text-base rounded-xl" />
-              <Input placeholder="Your Phone Number" className="bg-white border-0 h-12 text-base rounded-xl" />
-              <Input placeholder="Your Email" className="bg-white border-0 h-12 text-base rounded-xl" />
-              <Textarea placeholder="Drop your message" className="bg-white border-0 min-h-32 text-base rounded-xl" />
-              <Button
-                onClick={handleComingSoon}
-                className="bg-green-600 hover:bg-green-700 text-white w-full h-12 text-base rounded-xl"
-              >
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                </svg>
-                Send Message
-              </Button>
-            </div>
-
-            {/* Contact Info with Illustration */}
-            <div className="space-y-4 sm:space-y-6">
-              <div className="bg-green-100 rounded-2xl p-4 sm:p-6 h-48 sm:h-64 flex items-center justify-center">
-                <Image
-                  src="/images/contact-illustration.png"
-                  alt="Contact us - Customer support illustration"
-                  width={400}
-                  height={300}
-                  className="rounded-lg max-w-full h-auto object-contain"
-                />
-              </div>
-
-              <div className="space-y-2 sm:space-y-3 text-white text-sm sm:text-base">
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0" />
-                  <span className="break-all">connect@plantmd.com</span>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 flex-shrink-0 mt-1" />
-                  <div className="space-y-1 text-sm">
-                    <div>+977 9800000000</div>
-                    <div>+977 9800000000</div>
-                    <div>+977 9800000000</div>
-                    <div>+977 9800000000</div>
-                  </div>
-                </div>
-                {/* Social Media Icons */}
-                <div className="flex space-x-4 mt-4">
-                  <Button
-                    onClick={handleComingSoon}
-                    variant="ghost"
-                    className="w-12 h-12 bg-green-600 hover:bg-green-700 rounded-full p-0"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </Button>
-                  <Button
-                    onClick={handleComingSoon}
-                    variant="ghost"
-                    className="w-12 h-12 bg-green-600 hover:bg-green-700 rounded-full p-0"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                  </Button>
-
-                  <Button
-                    onClick={handleComingSoon}
-                    variant="ghost"
-                    className="w-12 h-12 bg-green-600 hover:bg-green-700 rounded-full p-0"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.378-5.031c0-5.441 4.419-9.86 9.86-9.86 5.441 0 9.86 4.419 9.86 9.86 0 5.441-4.419 9.86-9.86 9.86z"/>
-                    </svg>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  
     </div>
   )
 }

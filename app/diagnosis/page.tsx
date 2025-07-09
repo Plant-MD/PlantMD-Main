@@ -1,51 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import DiagnosisCard from './DiagnosisCard';
-
-type DiagnosisData = {
-  disease: string;
-  severity: string;
-  confidence: number;
-  description: string;
-  symptoms: string[];
-  causes: string[];
-  severityColor?: string;
-  confidenceColor?: string;
-};
+import { diagnosisData } from './data';
+import type { Diagnosis } from './data';
 
 export default function DiagnosisPage() {
-  const [diagnoses, setDiagnoses] = useState<DiagnosisData[]>([]);
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // STEP 1: Replace this with real API or ML output later
-    const mockData: DiagnosisData[] = [
-      {
-        disease: 'Leaf Spot Disease',
-        severity: 'Moderate severity',
-        confidence: 94,
-        description: 'Fungal infection causing circular brown spots with yellow halos on leaves.',
-        symptoms: ['Brown circular spots', 'Yellow halos around spots', 'Leaf yellowing'],
-        causes: ['High humidity', 'Poor air circulation', 'Overhead watering'],
-        severityColor: 'bg-yellow-100 text-yellow-700',
-        confidenceColor: 'text-green-700',
-      },
-      {
-        disease: 'Early Blight',
-        severity: 'Mild severity',
-        confidence: 78,
-        description: 'Common fungal disease affecting lower leaves first.',
-        symptoms: ['Dark spots with concentric rings', 'Yellowing leaves', 'Premature leaf drop'],
-        causes: ['Warm, humid conditions', 'Stressed plants', 'Poor nutrition'],
-        severityColor: 'bg-green-100 text-green-700',
-        confidenceColor: 'text-yellow-700',
-      },
-    ];
-
-    // Simulate delay for now
     setTimeout(() => {
-      setDiagnoses(mockData);
+      setDiagnoses(diagnosisData);
       setLoading(false);
     }, 1000);
   }, []);
@@ -78,12 +45,16 @@ export default function DiagnosisPage() {
 
         {/* Footer */}
         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-medium transition">
-            Scan Another Plant
-          </button>
-          <button className="bg-white border border-green-600 text-green-700 hover:bg-green-50 px-6 py-2 rounded-full text-sm font-medium transition">
-            Share Feedback
-          </button>
+          <Link href="/scan" passHref>
+            <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-medium transition">
+              Scan Another Plant
+            </button>
+          </Link>
+          <Link href="/feedback" passHref>
+            <button className="bg-white border border-green-600 text-green-700 hover:bg-green-50 px-6 py-2 rounded-full text-sm font-medium transition">
+              Share Feedback
+            </button>
+          </Link>
         </div>
       </div>
     </div>

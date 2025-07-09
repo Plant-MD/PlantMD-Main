@@ -12,7 +12,7 @@ const ProcessingPage: React.FC = () => {
     const step2Timer = setTimeout(() => setStep(2), 1500);
     const step3Timer = setTimeout(() => setStep(3), 3000);
     const redirectTimer = setTimeout(() => {
-      router.push('/result'); 
+      router.push('/diagnosis'); 
     }, 4000);
 
     return () => {
