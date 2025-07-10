@@ -1,6 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { Toaster } from "@/components/ui/sonner"
+import Layout from "@/components/layout"
+import Footer from "@/components/footer"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -59,7 +62,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <Layout>
+          {children}
+        </Layout>
+        <Footer />
+        <Toaster />
+      </body>
     </html>
   )
 }

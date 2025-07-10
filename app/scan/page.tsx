@@ -4,7 +4,6 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; 
 import { Camera, Upload, X, Image as ImageIcon, Sparkles, Video, VideoOff, AlertCircle } from 'lucide-react';
 
-
 const ScanPage: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -277,7 +276,7 @@ const ScanPage: React.FC = () => {
                   disabled={!cameraReady}
                   className="p-4 sm:p-6 bg-white/90 backdrop-blur-sm text-primary-dark rounded-full hover:bg-white transition-all duration-200 shadow-lg touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Camera className="h-6 w-6 sm:h-8 sm:w-8" />
+                  <Camera className="h-6 w-6 sm:h-8 sm:h-8" />
                 </button>
               </div>
             </div>
