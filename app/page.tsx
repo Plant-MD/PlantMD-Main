@@ -1,29 +1,27 @@
-"use client"
-
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import LoadingScreen from "@/components/loading-screen"
+import LoadingScreen from "@/components/LoadingScreen"
 import { Play, Leaf, Zap, Shield, Phone, Mail } from "lucide-react"
 
 export default function PlantMDLanding() {
-  const [showComingSoon, setShowComingSoon] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  // const [showComingSoon, setShowComingSoon] = useState(false)
+  // const [isLoading, setIsLoading] = useState(true)
 
-  const handleComingSoon = () => {
-    setShowComingSoon(true)
-  }
+  // const handleComingSoon = () => {
+  //   setShowComingSoon(true)
+  // }
 
-  const handleLoadingComplete = () => {
-    setIsLoading(false)
-  }
+  // const handleLoadingComplete = () => {
+  //   setIsLoading(false)
+  // }
 
-  if (isLoading) {
-    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
-  }
+  // if (isLoading) {
+  //   return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+  // }
 
   return (
     <div className="min-h-screen bg-white">
@@ -314,7 +312,7 @@ export default function PlantMDLanding() {
             />
             <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
               <Button
-                onClick={handleComingSoon}
+                // onClick={handleComingSoon}
                 className="bg-[#011606] hover:bg-[#022a0a] text-white border-0 rounded-full w-24 h-24 sm:w-28 sm:h-28 transition-all duration-300 shadow-2xl"
               >
                 <Play className="w-10 h-10 sm:w-12 sm:h-12" />
