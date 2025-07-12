@@ -1,7 +1,7 @@
-'use client'; 
+'use client';
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { Camera, Upload, X, Image as ImageIcon, Sparkles, Video, VideoOff, AlertCircle } from 'lucide-react';
 
 const ScanPage: React.FC = () => {
@@ -56,7 +56,7 @@ const ScanPage: React.FC = () => {
   const startCamera = useCallback(async () => {
     setCameraError(null);
     setCameraReady(false);
-    
+
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       setCameraError('Camera not supported on this device');
       return;
@@ -64,7 +64,7 @@ const ScanPage: React.FC = () => {
 
     try {
       let mediaStream: MediaStream | null = null;
-      
+
       try {
         mediaStream = await navigator.mediaDevices.getUserMedia({
           video: {
@@ -81,10 +81,10 @@ const ScanPage: React.FC = () => {
           }
         });
       }
-      
+
       setStream(mediaStream);
       setShowCamera(true);
-      
+
       setTimeout(() => {
         if (videoRef.current && mediaStream) {
           videoRef.current.srcObject = mediaStream;
@@ -98,11 +98,11 @@ const ScanPage: React.FC = () => {
           });
         }
       }, 100);
-      
+
     } catch (error: any) {
       console.error('Camera error:', error);
       let errorMessage = 'Unable to access camera. ';
-      
+
       if (error.name === 'NotAllowedError') {
         errorMessage += 'Please allow camera permissions and try again.';
       } else if (error.name === 'NotFoundError') {
@@ -114,7 +114,7 @@ const ScanPage: React.FC = () => {
       } else {
         errorMessage += 'Please check your camera settings and try again.';
       }
-      
+
       setCameraError(errorMessage);
     }
   }, []);
@@ -136,7 +136,7 @@ const ScanPage: React.FC = () => {
 
   const capturePhoto = useCallback(() => {
     console.log('Capturing photo...');
-    
+
     if (!videoRef.current || !canvasRef.current || !cameraReady) {
       setCameraError('Camera not ready. Please wait and try again.');
       return;
@@ -145,7 +145,7 @@ const ScanPage: React.FC = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    
+
     if (!context) {
       setCameraError('Failed to capture image. Please try again.');
       return;
@@ -156,10 +156,10 @@ const ScanPage: React.FC = () => {
       canvas.height = video.videoHeight || video.clientHeight;
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-      
+
       setSelectedImage(imageDataUrl);
       stopCamera();
-      
+
     } catch (captureError) {
       setCameraError('Failed to capture image. Please try again.');
     }
@@ -174,10 +174,42 @@ const ScanPage: React.FC = () => {
 
   const handleAnalyze = async () => {
     if (!selectedImage) return;
-    
+
     setIsProcessing(true);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    router.push('/processing');
+    const formData = new FormData();
+    const dataURLtoBlob = (dataURL: string) => {
+      const arr = dataURL.split(',');
+      const mime = arr[0].match(/:(.*?);/)?.[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new Blob([u8arr], { type: mime });
+    };
+
+    const blob = dataURLtoBlob(selectedImage);
+    formData.append('file', blob, 'plant.jpg');
+
+    try {
+      const response = await fetch('http://ec2-3-76-37-144.eu-central-1.compute.amazonaws.com:8000/predict', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const predictions = data.predictions; // Extract only predictions array
+      router.push(`/processing?predictions=${encodeURIComponent(JSON.stringify(predictions))}`);
+    } catch (error) {
+      console.error('API call failed:', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   // Cleanup camera stream on unmount
@@ -189,7 +221,7 @@ const ScanPage: React.FC = () => {
     };
   }, [stream]);
 
-  
+
   return (
     <div className="min-h-screen py-6 sm:py-12 px-3 sm:px-4 lg:px-8 animate-fade-in">
       <div className="max-w-4xl mx-auto">
@@ -199,7 +231,7 @@ const ScanPage: React.FC = () => {
             <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-mint mr-2" />
             <span className="text-xs sm:text-sm font-medium text-primary-dark">AI Plant Analysis</span>
           </div>
-          
+
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-primary-dark mb-4 sm:mb-6 px-2">
             Upload Plant Image
           </h1>
@@ -216,7 +248,7 @@ const ScanPage: React.FC = () => {
               <div>
                 <h3 className="text-sm font-medium text-red-800 mb-1">Camera Access Error</h3>
                 <p className="text-sm text-red-700">{cameraError}</p>
-                <button 
+                <button
                   onClick={() => setCameraError(null)}
                   className="text-xs text-red-600 underline mt-1"
                 >
@@ -236,7 +268,7 @@ const ScanPage: React.FC = () => {
                 {cameraReady ? 'Position your plant in the frame and tap capture' : 'Loading camera...'}
               </p>
             </div>
-            
+
             <div className="relative max-w-2xl mx-auto">
               <video
                 ref={videoRef}
@@ -246,7 +278,7 @@ const ScanPage: React.FC = () => {
                 className="w-full aspect-video rounded-xl sm:rounded-2xl shadow-lg bg-gray-900"
                 style={{ objectFit: 'cover' }}
               />
-              
+
               {!cameraReady && (
                 <div className="absolute inset-0 bg-gray-900/50 rounded-xl sm:rounded-2xl flex items-center justify-center">
                   <div className="text-white text-center">
@@ -255,14 +287,14 @@ const ScanPage: React.FC = () => {
                   </div>
                 </div>
               )}
-              
+
               {cameraReady && (
                 <div className="absolute inset-0 pointer-events-none">
                   <div className="absolute inset-2 sm:inset-4 border-2 border-white/50 rounded-xl sm:rounded-2xl"></div>
                   <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 sm:w-8 sm:h-8 border-2 border-white rounded-full"></div>
                 </div>
               )}
-              
+
               <div className="absolute bottom-3 sm:bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-3 sm:space-x-4">
                 <button
                   onClick={stopCamera}
@@ -270,7 +302,7 @@ const ScanPage: React.FC = () => {
                 >
                   <VideoOff className="h-4 w-4 sm:h-6 sm:w-6" />
                 </button>
-                
+
                 <button
                   onClick={capturePhoto}
                   disabled={!cameraReady}
@@ -280,7 +312,7 @@ const ScanPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            
+
             <canvas ref={canvasRef} className="hidden" />
           </div>
         )}
@@ -290,11 +322,10 @@ const ScanPage: React.FC = () => {
           <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-sage/20 p-4 sm:p-8 mb-6 sm:mb-8 shadow-xl mx-3 sm:mx-0">
             {!selectedImage ? (
               <div
-                className={`relative border-2 border-dashed rounded-xl sm:rounded-2xl p-6 sm:p-12 text-center transition-all duration-300 ${
-                  isDragging
-                    ? 'border-mint bg-mint/5 scale-105'
-                    : 'border-sage/30 hover:border-mint hover:bg-mint/5'
-                }`}
+                className={`relative border-2 border-dashed rounded-xl sm:rounded-2xl p-6 sm:p-12 text-center transition-all duration-300 ${isDragging
+                  ? 'border-mint bg-mint/5 scale-105'
+                  : 'border-sage/30 hover:border-mint hover:bg-mint/5'
+                  }`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
@@ -302,7 +333,7 @@ const ScanPage: React.FC = () => {
                 <div className="absolute inset-0 rounded-xl sm:rounded-2xl overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-mint to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
-                
+
                 <div className="relative space-y-4 sm:space-y-8">
                   <div className="flex justify-center">
                     <div className="relative">
@@ -312,7 +343,7 @@ const ScanPage: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-br from-mint to-forest rounded-xl sm:rounded-2xl opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
                     </div>
                   </div>
-                  
+
                   <div>
                     <h3 className="text-lg sm:text-2xl font-bold text-primary-dark mb-2 sm:mb-3">
                       Drop your image here
@@ -330,7 +361,7 @@ const ScanPage: React.FC = () => {
                       <Upload className="mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
                       Browse Files
                     </button>
-                    
+
                     <button
                       onClick={startCamera}
                       className="inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-white/60 backdrop-blur-sm text-forest font-semibold rounded-lg sm:rounded-xl border border-sage/20 hover:bg-white/80 transition-all duration-300 touch-manipulation"
@@ -355,12 +386,12 @@ const ScanPage: React.FC = () => {
                   >
                     <X className="h-4 w-4 sm:h-5 sm:w-5" />
                   </button>
-                  
+
                   <div className="absolute inset-0 rounded-xl sm:rounded-2xl overflow-hidden pointer-events-none">
                     <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-mint to-transparent animate-scan opacity-50"></div>
                   </div>
                 </div>
-                
+
                 <div className="text-center">
                   <h3 className="text-lg sm:text-2xl font-bold text-primary-dark mb-2 sm:mb-4">
                     Image Ready for Analysis
@@ -368,7 +399,7 @@ const ScanPage: React.FC = () => {
                   <p className="text-sm sm:text-base text-sage mb-4 sm:mb-8 px-2">
                     Our AI will examine your plant for diseases, pests, and health issues.
                   </p>
-                  
+
                   <div className="flex flex-col gap-3 sm:gap-4 justify-center">
                     <button
                       onClick={handleAnalyze}
@@ -392,7 +423,7 @@ const ScanPage: React.FC = () => {
                         )}
                       </div>
                     </button>
-                    
+
                     <button
                       onClick={clearImage}
                       className="px-6 sm:px-8 py-3 sm:py-4 bg-white/60 backdrop-blur-sm text-primary-dark font-semibold rounded-lg sm:rounded-xl border border-sage/20 hover:bg-white/80 transition-all duration-300 touch-manipulation"
