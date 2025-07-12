@@ -28,10 +28,12 @@ function Hero() {
                         <div className="bg-white shadow-xl rounded-3xl p-8 max-w-lg w-full text-center border border-green-200">
                             <div className="flex flex-col items-center gap-4">
                                 <div className="w-full h-48 border-4 border-dashed border-green-400 rounded-2xl flex justify-center items-center bg-green-50 hover:bg-green-100 transition-colors pointer-cursor">
-                                    <button className="text-green-700 font-semibold">
-                                        <span className="text-2xl block">Upload Image</span>
-                                        <span className="text-sm">or drop a file</span>
-                                    </button>
+                                    <Link href="/scan">
+                                        <button className="text-green-700 font-semibold">
+                                            <span className="text-2xl block">Upload Image</span>
+                                            <span className="text-sm">or drop a file</span>
+                                        </button>
+                                    </Link>
                                 </div>
 
                                 <p className="text-green-700 mt-4 text-sm">
