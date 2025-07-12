@@ -5,9 +5,9 @@ import { Button } from '../ui/button'
 
 function Header() {
     const navLinks = [
-        { label: "About Us", href: "/about" },
-        { label: "Tutorial", href: "/projects" },
-        { label: "Contact", href: "/blog" },
+        { label: "About Us", href: "#about" },
+        { label: "Tutorial", href: "#tutorial" },
+        { label: "Contact", href: "#team" },
     ];
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-sage/20">
@@ -40,7 +40,7 @@ function Header() {
                         ))}
 
                         <Link
-                            href="/dashboard"
+                            href="/scan"
                             className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto"
                         >
                             Use App

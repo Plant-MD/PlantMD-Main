@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
@@ -11,31 +12,35 @@ import About from "@/components/Hero/About"
 import TeamSection from "@/components/Hero/Team"
 
 export default function PlantMDLanding() {
-  // const [showComingSoon, setShowComingSoon] = useState(false)
-  // const [isLoading, setIsLoading] = useState(true)
+  const [showComingSoon, setShowComingSoon] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
-  // const handleComingSoon = () => {
-  //   setShowComingSoon(true)
-  // }
+  const handleComingSoon = () => {
+    setShowComingSoon(true)
+  }
 
-  // const handleLoadingComplete = () => {
-  //   setIsLoading(false)
-  // }
+  const handleLoadingComplete = () => {
+    setIsLoading(false)
+  }
 
-  // if (isLoading) {
-  //   return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
-  // }
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+  }
 
   return (
     <div className="min-h-screen bg-white">
       <Hero />
       {/* About Section */}
+      <div id="about">
 
-      <About />
+        <About />
+      </div>
 
       {/* Team Section */}
-      <TeamSection />
+      <div id="team">
 
+        <TeamSection />
+      </div>
       {/* Using The App Section */}
       <section className="bg-gray-50 px-4 sm:px-6 py-8 sm:py-16" id="tutorial">
         <div className="max-w-6xl mx-auto">
@@ -127,7 +132,7 @@ export default function PlantMDLanding() {
         </div>
       </section>
 
-  
+
     </div>
   )
 }
