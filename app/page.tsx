@@ -8,6 +8,7 @@ import LoadingScreen from "@/components/LoadingScreen"
 import { Play, Leaf, Zap, Shield, Phone, Mail } from "lucide-react"
 import Hero from "@/components/Hero/Hero"
 import About from "@/components/Hero/About"
+import TeamSection from "@/components/Hero/Team"
 
 export default function PlantMDLanding() {
   // const [showComingSoon, setShowComingSoon] = useState(false)
@@ -33,73 +34,7 @@ export default function PlantMDLanding() {
       <About />
 
       {/* Team Section */}
-      <section className="px-4 sm:px-6 py-8 sm:py-16">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-8 sm:mb-12">Our Team</h2>
-
-          <div className="flex flex-col items-center space-y-6">
-            {/* Top row - 2 members */}
-            <div className="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-12">
-              <div className="text-center animate-fade-in-up">
-                <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4 border-4 border-black overflow-hidden">
-                  <Image
-                    src="/images/team/mentor.jpg"
-                    alt="Abhishek Dev"
-                    width={120}
-                    height={120}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="font-semibold text-gray-900">Abhishek Dev</h3>
-                <p className="text-gray-600">Mentor</p>
-              </div>
-              <div className="text-center animate-fade-in-up delay-200">
-                <div className="w-32 h-32 bg-gray-200 rounded-full mx-auto mb-4 border-4 border-black overflow-hidden">
-                  <Image
-                    src="/images/team/peermentor.jpg"
-                    alt="Aanchal Nancy Jha"
-                    width={120}
-                    height={120}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <h3 className="font-semibold text-gray-900">Aanchal Nancy Jha</h3>
-                <p className="text-gray-600">Team Member</p>
-              </div>
-            </div>
-
-            {/* Bottom row - 6 members */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
-              {[
-                { name: "Bishika Pant", image: "1.jpg" },
-                { name: "Chetna Sharma", image: "2.jpg" },
-                { name: "Mandip Sapkota", image: "3.jpg" },
-                { name: "Safal Poudel", image: "4.jpg" },
-                { name: "Suyog Prasai", image: "5.jpg" },
-                { name: "Vishesh Jha", image: "6.jpg" },
-              ].map((member, index) => (
-                <div
-                  key={index}
-                  className="text-center animate-fade-in-up"
-                  style={{ animationDelay: `${(index + 3) * 100}ms` }}
-                >
-                  <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-2 border-4 border-black overflow-hidden hover:scale-110 transition-transform duration-300">
-                    <Image
-                      src={`/images/team/${member.image}`}
-                      alt={member.name}
-                      width={80}
-                      height={80}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <h4 className="text-sm font-semibold text-gray-900">{member.name}</h4>
-                  <p className="text-xs text-gray-600">Member</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <TeamSection />
 
       {/* Using The App Section */}
       <section className="bg-gray-50 px-4 sm:px-6 py-8 sm:py-16" id="tutorial">
