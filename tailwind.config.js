@@ -104,6 +104,13 @@ module.exports = {
         "glow": "glow 2s ease-in-out infinite alternate",
         "scan": "scan 2s ease-in-out infinite",
       },
+      fontFamily: {
+        roboto: ['var(--font-roboto)', 'sans-serif'],
+        oswald: ['var(--font-oswald)', 'sans-serif'],
+        bebas_neue: ['var(--font-bebas_neue)', 'sans-serif'],
+        lato: ['var(--font-lato)', 'sans-serif'],
+      }
+
     },
   },
   plugins: [require("tailwindcss-animate")],
