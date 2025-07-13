@@ -53,11 +53,11 @@ export default function PlantMDLanding() {
                 <div className="bg-white rounded-[2.2rem] p-2">
                   <div className="bg-gray-100 rounded-[1.8rem] h-[400px] flex items-center justify-center">
                     <Image
-                      src="/images/placeholder-step1.jpg"
+                      src="/hero/upload.png"
                       alt="Step 1 - Upload photo"
                       width={180}
                       height={350}
-                      className="rounded-2xl"
+                      className="w-full h-full object-cover rounded-[1rem] sm:rounded-[1.8rem]"
                     />
                   </div>
                 </div>
@@ -74,11 +74,11 @@ export default function PlantMDLanding() {
                 <div className="bg-white rounded-[2.2rem] p-2">
                   <div className="bg-gray-100 rounded-[1.8rem] h-[400px] flex items-center justify-center">
                     <Image
-                      src="/images/placeholder-step2.jpg"
-                      alt="Step 2 - Check results"
+                      src="/hero/process.png"
+                      alt="Step 2 - Process Photo"
                       width={180}
                       height={350}
-                      className="rounded-2xl"
+                      className="w-full h-full object-cover rounded-[1rem] sm:rounded-[1.8rem]"
                     />
                   </div>
                 </div>
@@ -93,11 +93,11 @@ export default function PlantMDLanding() {
                 <div className="bg-white rounded-[2.2rem] p-2">
                   <div className="bg-gray-100 rounded-[1.8rem] h-[400px] flex items-center justify-center">
                     <Image
-                      src="/images/placeholder-step3.jpg"
-                      alt="Step 3 - Provide feedback"
+                      src="/hero/success.png"
+                      alt="Step 3 - Result photo"
                       width={180}
                       height={350}
-                      className="rounded-2xl"
+                      className="w-full h-full object-cover rounded-[1rem] sm:rounded-[1.8rem]"
                     />
                   </div>
                 </div>
