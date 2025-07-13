@@ -190,20 +190,26 @@ const ScanPage: React.FC = () => {
       return new Blob([u8arr], { type: mime });
     };
 
-    const blob = dataURLtoBlob(selectedImage);
-    formData.append('file', blob, 'plant.jpg');
-
+    try {
+  const blob = dataURLtoBlob(selectedImage);
+  formData.append('file', blob, 'plant.jpg');
+} catch (err) {
+  console.error('Blob creation failed', err);
+}
     try {
       const response = await fetch('http://ec2-3-76-37-144.eu-central-1.compute.amazonaws.com:8000/predict', {
         method: 'POST',
         body: formData,
+        redirect: "follow"
       });
 
       if (!response.ok) {
+        console.log(response);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log(data);
       const predictions = data.predictions; // Extract only predictions array
       router.push(`/processing?predictions=${encodeURIComponent(JSON.stringify(predictions))}`);
     } catch (error) {
