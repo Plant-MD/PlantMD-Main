@@ -1,26 +1,48 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Loader2, Eye, Brain, CheckCircle } from 'lucide-react';
 
 const ProcessingPage: React.FC = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [step, setStep] = useState(1);
+  const [predictions, setPredictions] = useState<any[]>([]);
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    const step2Timer = setTimeout(() => setStep(2), 1500);
-    const step3Timer = setTimeout(() => setStep(3), 3000);
-    const redirectTimer = setTimeout(() => {
-      router.push('/diagnosis'); 
-    }, 4000);
+    // Retrieve and parse predictions only if not already set
+    if (predictions.length === 0 && !hasRedirected) {
+      const queryPredictions = searchParams.get('predictions');
+      if (queryPredictions) {
+        try {
+          const decodedPredictions = JSON.parse(decodeURIComponent(queryPredictions));
+          setPredictions(decodedPredictions);
+        } catch (error) {
+          console.error('Failed to parse predictions:', error);
+        }
+      }
+    }
 
-    return () => {
-      clearTimeout(step2Timer);
-      clearTimeout(step3Timer);
-      clearTimeout(redirectTimer);
-    };
-  }, [router]);
+    // Set up timers only if not redirected
+    if (!hasRedirected) {
+      const step2Timer = setTimeout(() => setStep(2), 1500);
+      const step3Timer = setTimeout(() => setStep(3), 3000);
+      const redirectTimer = setTimeout(() => {
+        router.push(
+          `/diagnosis?predictions=${encodeURIComponent(JSON.stringify(predictions))}`
+        );
+        setHasRedirected(true); // Prevent further redirects
+      }, 4000);
+
+      return () => {
+        clearTimeout(step2Timer);
+        clearTimeout(step3Timer);
+        clearTimeout(redirectTimer);
+      };
+    }
+  }, [router, predictions, hasRedirected]); // Safe dependencies
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 sm:px-6 lg:px-8">
@@ -35,7 +57,7 @@ const ProcessingPage: React.FC = () => {
                 </div>
               </div>
             </div>
-            
+
             <h1 className="text-2xl lg:text-3xl font-bold text-primary-dark mb-4">
               Analyzing Your Plant...
             </h1>
@@ -53,7 +75,7 @@ const ProcessingPage: React.FC = () => {
               isActive={step >= 1}
               isCompleted={step > 1}
             />
-            
+
             <ProcessingStep
               icon={<Brain className="h-5 w-5" />}
               title="AI Analysis"
@@ -61,13 +83,13 @@ const ProcessingPage: React.FC = () => {
               isActive={step >= 2}
               isCompleted={step > 2}
             />
-            
+
             <ProcessingStep
               icon={<CheckCircle className="h-5 w-5" />}
               title="Generating Report"
               description="Preparing treatment recommendations"
               isActive={step >= 3}
-              isCompleted={false} // This will start when step is 3, but not complete
+              isCompleted={false}
             />
           </div>
 
@@ -107,38 +129,37 @@ const ProcessingStep: React.FC<ProcessingStepProps> = ({
   isCompleted
 }) => {
   return (
-    <div className={`flex items-center space-x-4 p-4 rounded-lg transition-all duration-500 ${
-      isActive ? 'bg-pale' : 'bg-gray-50'
-    }`}>
-      <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${
-        isCompleted 
-          ? 'bg-forest text-white' 
-          : isActive 
-            ? 'bg-mint text-white animate-pulse' 
-            : 'bg-gray-200 text-gray-400'
-      }`}>
-        {isCompleted ? <CheckCircle className="h-5 w-5" /> : icon}
-      </div>
-      
-      <div className="flex-1 text-left">
-        <h4 className={`font-semibold transition-colors duration-500 ${
-          isActive ? 'text-primary-dark' : 'text-gray-500'
+    <Suspense fallback={<div className="text-center p-10">Loading...</div>}>
+
+      <div className={`flex items-center space-x-4 p-4 rounded-lg transition-all duration-500 ${isActive ? 'bg-pale' : 'bg-gray-50'
         }`}>
-          {title}
-        </h4>
-        <p className={`text-sm transition-colors duration-500 ${
-          isActive ? 'text-gray-600' : 'text-gray-400'
-        }`}>
-          {description}
-        </p>
-      </div>
-      
-      {isActive && !isCompleted && (
-        <div className="flex-shrink-0">
-          <Loader2 className="h-4 w-4 text-forest animate-spin" />
+        <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${isCompleted
+            ? 'bg-forest text-white'
+            : isActive
+              ? 'bg-mint text-white animate-pulse'
+              : 'bg-gray-200 text-gray-400'
+          }`}>
+          {isCompleted ? <CheckCircle className="h-5 w-5" /> : icon}
         </div>
-      )}
-    </div>
+
+        <div className="flex-1 text-left">
+          <h4 className={`font-semibold transition-colors duration-500 ${isActive ? 'text-primary-dark' : 'text-gray-500'
+            }`}>
+            {title}
+          </h4>
+          <p className={`text-sm transition-colors duration-500 ${isActive ? 'text-gray-600' : 'text-gray-400'
+            }`}>
+            {description}
+          </p>
+        </div>
+
+        {isActive && !isCompleted && (
+          <div className="flex-shrink-0">
+            <Loader2 className="h-4 w-4 text-forest animate-spin" />
+          </div>
+        )}
+      </div>
+    </Suspense>
   );
 };
 
