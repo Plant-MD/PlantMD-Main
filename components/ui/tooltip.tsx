@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
