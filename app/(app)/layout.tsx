@@ -9,6 +9,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://plant-md.github.io"),
   title: "Plant MD - Diagnose Plant Disease Instantly",
   description:
     "PlantMD is a smart mobile application that helps farmers identify plant diseases early and suggest reliable treatment methods using advanced AI technology.",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Plant MD - Diagnose Plant Disease Instantly",
     description: "Smart mobile application for early plant disease identification using AI technology.",
-    url: "https://plantmd.com",
+    url: "/",
     siteName: "Plant MD",
     images: [
       {
