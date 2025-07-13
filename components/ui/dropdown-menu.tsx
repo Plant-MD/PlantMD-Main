@@ -1,5 +1,5 @@
-"use client"
-
+'use client';
+export const dynamic = 'force-dynamic';
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"

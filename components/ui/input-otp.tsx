@@ -1,5 +1,5 @@
-"use client"
-
+'use client';
+export const dynamic = 'force-dynamic';
 import * as React from "react"
 import { OTPInput, OTPInputContext } from "input-otp"
 import { Dot } from "lucide-react"

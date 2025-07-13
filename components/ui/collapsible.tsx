@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible"
 

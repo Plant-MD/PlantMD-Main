@@ -1,5 +1,5 @@
-"use client"
-
+'use client';
+export const dynamic = 'force-dynamic';
 import { GripVertical } from "lucide-react"
 import * as ResizablePrimitive from "react-resizable-panels"
 

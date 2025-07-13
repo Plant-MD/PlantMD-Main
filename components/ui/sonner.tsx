@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"

@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 // Inspired by react-hot-toast library
 import * as React from "react"

@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
 

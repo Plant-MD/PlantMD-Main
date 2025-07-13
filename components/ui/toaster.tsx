@@ -1,4 +1,5 @@
-"use client"
+'use client';
+export const dynamic = 'force-dynamic';
 
 import { useToast } from "@/hooks/use-toast"
 import {

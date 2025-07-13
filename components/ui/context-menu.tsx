@@ -1,5 +1,5 @@
-"use client"
-
+'use client';
+export const dynamic = 'force-dynamic';
 import * as React from "react"
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
 import { Check, ChevronRight, Circle } from "lucide-react"

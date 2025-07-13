@@ -1,5 +1,5 @@
-"use client"
-
+'use client';
+export const dynamic = 'force-dynamic';
 import * as React from "react"
 import * as ProgressPrimitive from "@radix-ui/react-progress"
 
