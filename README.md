@@ -115,7 +115,7 @@ The contributors of this project are participants of Incubate Nepal 2025 Cohort.
 <table>
   <tr>
     <td width=150>
-      <img src="public/images/team/Visheshjha.jpg" alt="Image of Vishesh Jha"/>
+      <img src="public/images/team/VisheshJha.jpg" alt="Image of Vishesh Jha"/>
     </td>
     <td>
       Vishesh Jha is a versatile full-stack developer, emerging security analyst, and passionate Web3 enthusiast with a strong interest in artificial intelligence. He served as the President of the Robotics Club at KMC, where he led several innovative tech initiatives.
