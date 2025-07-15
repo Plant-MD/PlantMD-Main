@@ -198,7 +198,7 @@ const ScanPage: React.FC = () => {
   console.error('Blob creation failed', err);
 }
     try {
-      const response = await fetch('http://ec2-3-76-37-144.eu-central-1.compute.amazonaws.com:8000/predict', {
+      const response = await fetch('https://ec2-3-76-37-144.eu-central-1.compute.amazonaws.com:8000/predict', {
         method: 'POST',
         body: formData,
         redirect: "follow"
