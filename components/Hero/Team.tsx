@@ -2,18 +2,18 @@ import React from "react";
 import Image from "next/image";
 
 const mentors = [
-  { name: "Abhishek Dev", role: "Mentor", image: "Abhishek Dev.jpeg" },
-  { name: "Aanchal Nancy Jha", role: "Team Member", image: "Aanchal Nancy Jha.jpg" },
+  { name: "Abhishek Dev", role: "Mentor", image: "AbhishekDev.jpeg" },
+  { name: "Aanchal Nancy Jha", role: "Team Member", image: "AanchalNancyJha.jpg" },
 ];
 
 
 const members = [
-  { name: "Bishika Pant", role: "Team Member", image: "Bishika Pant.png" },
-  { name: "Chetna Sharma", role: "Team Member", image: "Chetna Sharma.jpeg" },
-  { name: "Mandip Sapkota", role: "Team Member", image: "Mandip Sapkota.jpeg" },
-  { name: "Safal Poudel", role: "Team Member", image: "Safal Poudel.jpg" },
-  { name: "Suyog Prasai", role: "Team Member", image: "Suyog Prasai.jpg" },
-  { name: "Vishesh Jha", role: "Team Member", image: "Vishesh Jha.jpg" },
+  { name: "Bisika Pant", role: "Team Member", image: "BisikaPant.png" },
+  { name: "Chetna Sharma", role: "Team Member", image: "ChetnaSharma.jpeg" },
+  { name: "Mandip Sapkota", role: "Team Member", image: "MandipSapkota.jpeg" },
+  { name: "Safal Poudel", role: "Team Member", image: "SafalPoudel.jpg" },
+  { name: "Suyog Prasai", role: "Team Member", image: "SuyogPrasai.jpg" },
+  { name: "Vishesh Jha", role: "Team Member", image: "VisheshJha.jpg" },
 ];
 
 const TeamSection: React.FC = () => {
@@ -49,12 +49,12 @@ const TeamSection: React.FC = () => {
               className="text-center animate-fade-in-up"
               style={{ animationDelay: `${(i + 3) * 100}ms` }}
             >
-              <div className="w-20 h-20 bg-gray-200 rounded-full mx-auto mb-2 overflow-hidden border-4 border-black hover:scale-110 transition-transform duration-300">
+              <div className="w-28 h-28 bg-gray-200 rounded-full mx-auto mb-2 overflow-hidden border-4 border-black hover:scale-110 transition-transform duration-300">
                 <Image
                   src={`/images/team/${member.image}`}
                   alt={member.name}
-                  width={80}
-                  height={80}
+                  width={100}
+                  height={100}
                   className="object-cover w-full h-full"
                 />
               </div>
