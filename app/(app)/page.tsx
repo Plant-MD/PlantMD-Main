@@ -58,7 +58,7 @@ export default function PlantMDLanding() {
                       src="/hero/upload.png"
                       alt="Step 1 - Upload photo"
                       width={180}
-                      height={350}
+                      height={400}
                       className="w-full h-full object-cover rounded-[1rem] sm:rounded-[1.8rem]"
                     />
                   </div>
