@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 // Defining the interface for the User model
 export interface User extends Document {
-  googleId: string; // Google OAuth ID
+  _id: string;
   username: string;
   name: string;
   email: string;
@@ -14,7 +14,6 @@ export interface User extends Document {
 // Defining the User schema
 const UserSchema: Schema<User> = new Schema(
   {
-    googleId: { type: String, required: true, unique: true }, // Google OAuth ID
     username: { type: String, required: true, unique: true, trim: true, lowercase: true },
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, trim: true, lowercase: true },

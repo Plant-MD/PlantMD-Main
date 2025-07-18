@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   verification: {
     google: "your-google-verification-code",
   },
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -64,11 +64,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <Layout>
-          {children}
-        </Layout>
-        <Footer />
-        <Toaster />
+          <Layout>
+            {children}
+          </Layout>
+          <Footer />
+          <Toaster />
       </body>
     </html>
   )
