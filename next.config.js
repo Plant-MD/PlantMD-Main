@@ -21,9 +21,9 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
   // Add output for static export if you're deploying to GitHub Pages
-  // output: 'export',
+  output: 'export',
   trailingSlash: true,
-  // Disable image optimization for static export
+
   images: {
     domains: ["placeholder.svg"],
     remotePatterns: [
