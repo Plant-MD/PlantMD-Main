@@ -8,6 +8,7 @@ import { Leaf, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Header from './Header';
 import { Roboto, Lato, Oswald } from "next/font/google";
+import { SessionProvider } from 'next-auth/react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -39,12 +40,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isCoreStep = ['/scan', '/processing', '/diagnosis'].includes(pathname);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
-      <Header />
-      <main className="pt-14 sm:pt-16">
-        {children}
-      </main>
-    </div>
+    <SessionProvider>
+
+      <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
+        <Header />
+        <main className="pt-14 sm:pt-16">
+          {children}
+        </main>
+      </div>
+    </SessionProvider>
   );
 };
 

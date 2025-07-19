@@ -2,18 +2,44 @@
 export const dynamic = 'force-dynamic';
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSession, signIn } from 'next-auth/react';
+import sendFeedback from "@/helpers/send_feeback";
 
 export default function FeedbackPage() {
   const [rating, setRating] = useState(0);
+  const [description, setDescription] = useState('');
+  const { data: session, status } = useSession();
+
+  const user_id = session?.user._id ?? '';
+  const email = session?.user.email ?? '';
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
+
+    console.log(email, user_id)
+    if (email === '' || !email || !user_id) {
+      signIn('google');
+    }
+
+    e.preventDefault();
+
+
+    try {
+      await sendFeedback({ email, userID: user_id, description, stars: rating });
+      setDescription('');
+      setRating(0);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center py-8 px-2 relative overflow-hidden">
-      {/* Absolute leaf image in background, behind the form */}
-      <div className="hidden lg:block absolute right-96
-       bottom-20 z-0 opacity-70 pointer-events-none select-none">
+      {/* Leaf image */}
+      <div className="hidden lg:block absolute right-96 bottom-20 z-0 opacity-70 pointer-events-none select-none">
         <Image
-          src="/leaf_image.png"  // Make sure this is the correct file name and extension
+          src="/leaf_image.png"
           alt="Leaf"
           width={200}
           height={200}
@@ -21,6 +47,8 @@ export default function FeedbackPage() {
           priority
         />
       </div>
+
+      {/* Feedback Card */}
       <div
         className="relative z-10 max-w-md w-full mx-auto rounded-2xl shadow-xl p-6 sm:p-10 space-y-7"
         style={{
@@ -30,10 +58,9 @@ export default function FeedbackPage() {
           border: "1px solid rgba(180,220,180,0.08)",
         }}
       >
-        {/* Logo Placeholder */}
+        {/* Logo */}
         <div className="flex items-center justify-center mb-2">
           <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-2 overflow-hidden">
-            {/* Place for image/logo */}
             <Image src="/logo.jpeg" alt="Logo" width={40} height={40} />
           </div>
           <span className="text-green-700 text-xl font-bold tracking-wide">
@@ -50,58 +77,50 @@ export default function FeedbackPage() {
         </p>
 
         {/* Feedback Form */}
-        <form className="space-y-4">
-          <input
-            type="text"
-            placeholder="Name"
-            className="w-full rounded-lg border border-gray-200 focus:border-green-400 px-4 py-2 outline-none bg-white/80"
-          />
-          <input
-            type="email"
-            placeholder="Email (optional)"
-            className="w-full rounded-lg border border-gray-200 focus:border-green-400 px-4 py-2 outline-none bg-white/80"
-          />
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <textarea
             placeholder="Feedback"
             rows={3}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full rounded-lg border border-gray-200 focus:border-green-400 px-4 py-2 outline-none resize-none bg-white/80"
           />
-        </form>
 
-        {/* Star Rating */}
-        <div className="flex items-center justify-center space-x-1 pt-2">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <button
-              type="button"
-              key={i}
-              onClick={() => setRating(i)}
-              className="focus:outline-none"
-              aria-label={`Rate ${i} star${i > 1 ? "s" : ""}`}
-            >
-              <svg
-                width="28"
-                height="28"
-                fill={i <= rating ? "#22c55e" : "none"}
-                stroke="#22c55e"
-                strokeWidth="2"
-                className="transition-all"
+          {/* Star Rating */}
+          <div className="flex items-center justify-center space-x-1 pt-2">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <button
+                type="button"
+                key={i}
+                onClick={() => setRating(i)}
+                className="focus:outline-none"
+                aria-label={`Rate ${i} star${i > 1 ? "s" : ""}`}
               >
-                <polygon
-                  points="14,3 17.09,10.9 25.51,11.18 18.94,16.51 21.18,24.02 14,19.5 6.82,24.02 9.06,16.51 2.49,11.18 10.91,10.9"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          ))}
-        </div>
+                <svg
+                  width="28"
+                  height="28"
+                  fill={i <= rating ? "#22c55e" : "none"}
+                  stroke="#22c55e"
+                  strokeWidth="2"
+                  className="transition-all"
+                >
+                  <polygon
+                    points="14,3 17.09,10.9 25.51,11.18 18.94,16.51 21.18,24.02 14,19.5 6.82,24.02 9.06,16.51 2.49,11.18 10.91,10.9"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            ))}
+          </div>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-lg py-2 mt-2 text-lg shadow focus:outline-none"
-        >
-          Send Feedback
-        </button>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-lg py-2 mt-2 text-lg shadow focus:outline-none"
+          >
+            Send Feedback
+          </button>
+        </form>
 
         {/* Appreciation Note */}
         <div className="text-center text-gray-600 text-sm pt-3 flex items-center justify-center">
