@@ -46,7 +46,32 @@ export const authOptions: NextAuthOptions = {
             );
 
             return true
-        }
+        },
+
+
+
+        async jwt({ token, user }) {
+            await dbConnect();
+
+            // Only on first sign in
+            if (user?.email) {
+                const dbUser = await UserModel.findOne({ email: user.email });
+                token._id = dbUser?._id?.toString();
+                token.username = dbUser?.username;
+                token.email = dbUser?.email;
+            }
+
+            return token;
+        },
+
+        async session({ session, token }) {
+            if (token) {
+                session.user._id = token._id;
+                session.user.username = token.username;
+                session.user.email = token.email;
+            }
+            return session;
+        },
 
     },
 };
