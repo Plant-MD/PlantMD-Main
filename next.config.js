@@ -21,7 +21,7 @@ const nextConfig = {
     missingSuspenseWithCSRBailout: false,
   },
   // Add output for static export if you're deploying to GitHub Pages
-  output: 'export',
+  //output: 'export',
   trailingSlash: true,
 
   images: {
