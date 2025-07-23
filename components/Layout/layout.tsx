@@ -1,14 +1,11 @@
 'use client';
-export const dynamic = 'force-dynamic';
 
 import React from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { Leaf, ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { usePathname } from 'next/navigation';
 import Header from './Header';
 import { Roboto, Lato, Oswald } from "next/font/google";
 import { SessionProvider } from 'next-auth/react';
+
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -35,7 +32,6 @@ const lato = Lato({
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
-  const router = useRouter();
   const isHomePage = pathname === '/';
   const isCoreStep = ['/scan', '/processing', '/diagnosis'].includes(pathname);
 
