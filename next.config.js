@@ -6,24 +6,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  images: {
-    domains: ["placeholder.svg"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
-    unoptimized: true,
-  },
   experimental: {
     optimizePackageImports: ["lucide-react"],
     missingSuspenseWithCSRBailout: false,
   },
-  // Add output for static export if you're deploying to GitHub Pages
-  output: 'export',
-  trailingSlash: true,
-
   images: {
     domains: ["placeholder.svg"],
     remotePatterns: [

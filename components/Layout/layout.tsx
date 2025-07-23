@@ -4,7 +4,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Header from './Header';
 import { Roboto, Lato, Oswald } from "next/font/google";
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react'; // Temporarily disabled for static export
 
 
 interface LayoutProps {
@@ -36,15 +36,12 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isCoreStep = ['/scan', '/processing', '/diagnosis'].includes(pathname);
 
   return (
-    <SessionProvider>
-
-      <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
-        <Header />
-        <main className="pt-14 sm:pt-16">
-          {children}
-        </main>
-      </div>
-    </SessionProvider>
+    <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
+      <Header />
+      <main className="pt-14 sm:pt-16">
+        {children}
+      </main>
+    </div>
   );
 };
 
