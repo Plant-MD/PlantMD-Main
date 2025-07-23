@@ -5,6 +5,7 @@ import Hero from "@/components/Hero/Hero"
 import About from "@/components/Hero/About"
 import TeamSection from "@/components/Hero/Team"
 import Header from "@/components/Layout/Header"
+import VideoSection from "@/components/Hero/Tutorial"
 
 export default function PlantMDLanding() {
 
@@ -93,28 +94,8 @@ export default function PlantMDLanding() {
         </div>
       </section>
 
-      <section className="px-4 sm:px-6 py-8 sm:py-16">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden">
-            <Image
-              src="/images/video-background.png"
-              alt="Plant MD in action - Smart farming technology"
-              width={800}
-              height={400}
-              className="w-full h-64 sm:h-80 lg:h-96 object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-              <Button
-                // onClick={handleComingSoon}
-                className="bg-[#011606] hover:bg-[#022a0a] text-white border-0 rounded-full w-24 h-24 sm:w-28 sm:h-28 transition-all duration-300 shadow-2xl"
-              >
-                <Play className="w-10 h-10 sm:w-12 sm:h-12" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <VideoSection />
+
     </div>
   )
 }
