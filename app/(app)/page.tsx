@@ -1,36 +1,18 @@
-'use client';
-export const dynamic = 'force-dynamic';
-
-import { useState } from "react"
-import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import LoadingScreen from "@/components/LoadingScreen"
 import { Play, Leaf, Zap, Shield, Phone, Mail } from "lucide-react"
 import Hero from "@/components/Hero/Hero"
 import About from "@/components/Hero/About"
 import TeamSection from "@/components/Hero/Team"
+import Header from "@/components/Layout/Header"
 
 export default function PlantMDLanding() {
-  const [showComingSoon, setShowComingSoon] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-
-  const handleComingSoon = () => {
-    setShowComingSoon(true)
-  }
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false)
-  }
-
-  if (isLoading) {
-    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />
-  }
 
   return (
     <div className="min-h-screen bg-white">
+
+      <Header />
+
       <Hero />
       {/* About Section */}
       <div id="about">
@@ -133,8 +115,6 @@ export default function PlantMDLanding() {
           </div>
         </div>
       </section>
-
-
     </div>
   )
 }

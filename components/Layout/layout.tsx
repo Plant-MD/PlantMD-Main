@@ -2,7 +2,6 @@
 
 import React, { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
-import Header from './Header';
 import { Roboto, Lato, Oswald } from "next/font/google";
 import { SessionProvider } from 'next-auth/react';
 // import { SessionProvider } from 'next-auth/react'; // Temporarily disabled for static export
@@ -38,9 +37,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <SessionProvider>
-      <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>z
-        <Header />
-        <main className="pt-14 sm:pt-16">
+      <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
+        <main className="">
           {children}
         </main>
       </div>

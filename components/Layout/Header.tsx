@@ -14,7 +14,8 @@ function Header() {
     const navLinks = [
         { label: "About Us", href: "#about" },
         { label: "Tutorial", href: "#tutorial" },
-        { label: "Contact", href: "#team" },
+        { label: "Contact", href: "#footer" },
+        { label: "Community", href: "community" },
     ]
 
     const toggleMenu = () => {
