@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function VideoSection() {
   return (
-    <section className="relative px-4 sm:px-6 py-16 bg-[#f9fef9] overflow-hidden min-h-screen">
+    <section className="relative px-4 sm:px-6 py-16 bg-[#f9fef9] overflow-hidden md:min-h-screen">
       <div className="max-w-4xl m-auto relative z-10 mt-20">
 
         {/* Corner Frames with parallel venation texture */}

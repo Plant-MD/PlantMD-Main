@@ -36,8 +36,8 @@ function Hero() {
         </svg>
       </div>
 
-      {/* Dancing GIF */}
-      {/* <img
+      {/* Dancing GIF
+      <img
         src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWJ6MXM5b2syZnduaDA5MjV5c2xkdnF3cjRja2l3cTlja3JoMzNxYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/n6P4pwFUUBJCcAQnTY/giphy.gif"
         alt="Dancing Duck"
         className="w-32 md:w-48 h-auto rounded-lg absolute right-[200px] top-10 z-10"
@@ -46,7 +46,7 @@ function Hero() {
       {/* Main Content Split */}
       <div className="flex w-full h-screen">
         {/* Left - Full image cover */}
-        <div className="w-1/2 relative">
+        <div className="w-1/2 relative hidden md:block">
           <Image
             src="/hero_bg.jpg"
             alt="temp_background"
@@ -57,7 +57,7 @@ function Hero() {
         </div>
 
         {/* Right - Upload Section */}
-        <div className="w-1/2 flex flex-col justify-center items-center p-8 relative z-10">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 relative z-10">
           {/* Header Badge */}
           <div className="mb-8">
             <div className="inline-flex items-center rounded-full border border-green-200/50 bg-white/90 px-4 py-2 shadow-md backdrop-blur-sm">

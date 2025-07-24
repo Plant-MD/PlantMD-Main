@@ -5,7 +5,7 @@ export default function TeamSection() {
     <div className="relative h-screen overflow-hidden">
       {/* Background Image */}
       <img
-        src="/about.png"
+        src="/contact.png"
         alt="Background"
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
