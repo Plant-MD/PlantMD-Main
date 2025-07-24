@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function VideoSection() {
   return (
-    <section className="relative px-4 sm:px-6 py-16 bg-[#f9fef9] overflow-hidden">
-      <div className="max-w-4xl mx-auto relative z-10">
+    <section className="relative px-4 sm:px-6 py-16 bg-[#f9fef9] overflow-hidden min-h-screen">
+      <div className="max-w-4xl m-auto relative z-10 mt-20">
 
         {/* Corner Frames with parallel venation texture */}
         {/* TOP LEFT */}
@@ -16,22 +16,6 @@ export default function VideoSection() {
         <CornerFrame position="bottom-left" />
         {/* BOTTOM RIGHT */}
         <CornerFrame position="bottom-right" />
-
-        {/* Leaf Decorations */}
-        <Image
-          src="/images/leaf1.png"
-          alt="Leaf Decoration"
-          width={120}
-          height={120}
-          className="absolute top-8 right-8 opacity-40 rotate-[20deg] z-0"
-        />
-        <Image
-          src="/images/leaf2.png"
-          alt="Leaf Decoration"
-          width={100}
-          height={100}
-          className="absolute bottom-12 left-6 opacity-30 -rotate-12 z-0"
-        />
 
         {/* Video Container */}
         <div className="relative z-10 overflow-hidden rounded-2xl sm:rounded-3xl aspect-video shadow-2xl border-4 border-white">

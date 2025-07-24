@@ -2,23 +2,21 @@
 import Link from "next/link";
 import React from "react";
 import DragOverComponent from "../shared/DragOver";
+import Image from "next/image";
+
 function Hero() {
-  // Handle dropped or selected files
   const handleFileDrop = (files: FileList) => {
     console.log("Files dropped or selected:", files);
-    // Add your file processing logic here (e.g., upload to server, analyze image, etc.)
   };
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-green-50 via-white to-emerald-50 overflow-hidden">
-      {/* Animated Background Elements */}
+    <section className="relative flex min-h-screen bg-gradient-to-br from-green-50 via-white to-emerald-50 overflow-hidden">
+      {/* Animated Background Blobs */}
       <div className="absolute inset-0">
-        <div className="absolute left-10 top-20 h-64 w-64 animate-pulse rounded-full bg-green-100 opacity-30 mix-blend-multiply blur-xl" />
         <div className="absolute right-10 top-40 h-64 w-64 animate-pulse rounded-full bg-emerald-100 opacity-30 mix-blend-multiply blur-xl delay-1000" />
-        <div className="absolute -bottom-8 left-20 h-64 w-64 animate-pulse rounded-full bg-lime-100 opacity-30 mix-blend-multiply blur-xl delay-2000" />
       </div>
 
-      {/* Organic Pattern Decorations */}
+      {/* Pattern Decorations */}
       <div className="absolute inset-0 opacity-10">
         <svg className="absolute left-12 top-24" width="100" height="100" viewBox="0 0 100 100">
           <defs>
@@ -38,35 +36,58 @@ function Hero() {
         </svg>
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
-        {/* Header Badge */}
-        <div className="mb-8 flex justify-center">
-          <div className="inline-flex items-center rounded-full border border-green-200/50 bg-white/90 px-4 py-2 shadow-md backdrop-blur-sm">
-            <div className="mr-2 h-2 w-2 animate-pulse rounded-full bg-green-500" />
-            <span className="text-xs font-semibold text-green-800">AI-Powered Plant Disease Detection</span>
-          </div>
+      {/* Dancing GIF */}
+      {/* <img
+        src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWJ6MXM5b2syZnduaDA5MjV5c2xkdnF3cjRja2l3cTlja3JoMzNxYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/n6P4pwFUUBJCcAQnTY/giphy.gif"
+        alt="Dancing Duck"
+        className="w-32 md:w-48 h-auto rounded-lg absolute right-[200px] top-10 z-10"
+      /> */}
+
+      {/* Main Content Split */}
+      <div className="flex w-full h-screen">
+        {/* Left - Full image cover */}
+        <div className="w-1/2 relative">
+          <Image
+            src="/hero_bg.jpg"
+            alt="temp_background"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
 
-        {/* Drag and Drop Component */}
-        <DragOverComponent
-          onDrop={handleFileDrop}
-          title="Upload Plant Photo"
-          subtitle="Get instant diagnosis & treatment"
-        />
+        {/* Right - Upload Section */}
+        <div className="w-1/2 flex flex-col justify-center items-center p-8 relative z-10">
+          {/* Header Badge */}
+          <div className="mb-8">
+            <div className="inline-flex items-center rounded-full border border-green-200/50 bg-white/90 px-4 py-2 shadow-md backdrop-blur-sm">
+              <div className="mr-2 h-2 w-2 animate-pulse rounded-full bg-green-500" />
+              <span className="text-xs font-semibold text-green-800">
+                AI-Powered Plant Disease Detection
+              </span>
+            </div>
+          </div>
 
-        {/* Terms and Privacy Links */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-gray-500">
-            By uploading, you agree to our{" "}
-            <Link href="/terms" className="text-green-600 underline hover:text-green-700">
-              Terms
-            </Link>{" "}
-            &{" "}
-            <Link href="/privacy" className="text-green-600 underline hover:text-green-700">
-              Privacy Policy
-            </Link>
-          </p>
+          {/* Drag and Drop */}
+          <DragOverComponent
+            onDrop={handleFileDrop}
+            title="Upload Plant Photo"
+            subtitle="Get instant diagnosis & treatment"
+          />
+
+          {/* Terms and Conditions */}
+          <div className="mt-8 text-center">
+            <p className="text-xs text-gray-500">
+              By uploading, you agree to our{" "}
+              <Link href="/terms" className="text-green-600 underline hover:text-green-700">
+                Terms
+              </Link>{" "}
+              &{" "}
+              <Link href="/privacy" className="text-green-600 underline hover:text-green-700">
+                Privacy Policy
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </section>

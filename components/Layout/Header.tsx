@@ -31,7 +31,7 @@ function Header() {
             <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
                 <div className="flex justify-between items-center h-14 sm:h-16">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+                    <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group justify-around">
                         <div className="">
                             <Image
                                 src="logo.png"
@@ -41,7 +41,7 @@ function Header() {
                             />
                         </div>
                         <div className="hidden sm:block">
-                            <h1 className="text-xl sm:text-2xl font-bold font-oswald tracking-wider bg-black bg-clip-text text-transparent">
+                            <h1 className="text-xl sm:text-2xl font-bold font-oswald tracking-wider text-left bg-black bg-clip-text text-transparent">
                                 PlantMD
                             </h1>
                         </div>
@@ -60,18 +60,17 @@ function Header() {
                                 <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-green-500 transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
-
                         <Link
                             href="/scan"
-                            className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto"
+                            className="bg-white border-2 border-green-600 text-green-700 px-4 lg:px-6 py-1  transition-all duration-300 shadow-sm hover:shadow-md font-roboto"
                         >
-                            Use App
+                            Scan Now
                         </Link>
 
                         {session ? (
                             <Button
                                 onClick={() => signOut()}
-                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto"
+                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
                             >
                                 <LogOut className="h-4 w-4 mr-2" />
                                 Sign Out
@@ -79,12 +78,14 @@ function Header() {
                         ) : (
                             <Button
                                 onClick={() => signIn('google')}
-                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto"
+                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
                             >
                                 <LogIn className="h-4 w-4 mr-2" />
                                 Sign In
                             </Button>
                         )}
+
+
                     </nav>
 
                     {/* Mobile Hamburger Button */}
@@ -103,8 +104,8 @@ function Header() {
 
                 {/* Mobile Menu */}
                 <div className={`md:hidden transition-all duration-300 ease-in-out ${isMenuOpen
-                        ? 'max-h-96 opacity-100 visible'
-                        : 'max-h-0 opacity-0 invisible overflow-hidden'
+                    ? 'max-h-96 opacity-100 visible'
+                    : 'max-h-0 opacity-0 invisible overflow-hidden'
                     }`}>
                     <div className="py-4 space-y-4 border-t border-sage/20 bg-white/90 backdrop-blur-sm">
                         {/* Mobile Navigation Links */}

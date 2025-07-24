@@ -64,6 +64,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Plant MD" />
+      </head>
       <body className={inter.className}>
         <PostHogProvider>
           <Layout>
