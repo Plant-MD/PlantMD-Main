@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import Layout from "@/components/Layout/layout"
-import Footer from "@/components/Layout/footer"
+import Footer from "@/components/Layout/Footer"
 import PostHogProvider from "@/components/PostHogProvider"
 import "./globals.css"
 
@@ -64,6 +64,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Plant MD" />
+      </head>
       <body className={inter.className}>
         <PostHogProvider>
           <Layout>

@@ -4,7 +4,7 @@ import React from 'react'
 function About() {
     return (
         <div>
-            <section id="about" className="bg-green-50 px-4 sm:px-6 py-8 sm:py-16">
+            <section id="about" className="bg-green-50 px-4 sm:px-6 py-8 sm:py-16 min-h-screen flex flex-col items-center justify-center">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-4">About Plant MD</h2>
                     <p className="text-base sm:text-lg text-gray-600 mb-8 sm:mb-12 leading-relaxed px-4 text-center font-roboto">
