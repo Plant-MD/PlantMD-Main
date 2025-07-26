@@ -3,13 +3,15 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import ScanLayout from '@/components/scan/ScanLayout';
+import Header from '@/components/Layout/Header';
 import { useCamera } from '@/hooks/useCamera';
 import { useImageUpload } from '@/hooks/useImageUpload';
+import ScanLayout from '@/components/scan/ScanLayout';
 
 const ScanPage: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
+  const [selectedPlant, setSelectedPlant] = useState<'tomato' | 'corn'>('tomato');
   const router = useRouter();
 
   const {
@@ -75,15 +77,15 @@ const ScanPage: React.FC = () => {
     try {
       const blob = dataURLtoBlob(selectedImage);
       formData.append('file', blob, 'plant.jpg');
+      formData.append('plant', selectedPlant);
     } catch (err) {
       console.error('Blob creation failed', err);
     }
 
     try {
-      const response = await fetch('https://api.plantmd.xyz/predict', {
+      const response = await fetch('/api/analyze', {
         method: 'POST',
         body: formData,
-        redirect: "follow"
       });
 
       if (!response.ok) {
@@ -93,8 +95,12 @@ const ScanPage: React.FC = () => {
 
       const data = await response.json();
       console.log(data);
-      const predictions = data.predictions;
-      router.push(`/processing?predictions=${encodeURIComponent(JSON.stringify(predictions))}`);
+      
+      if (data.success && data.predictions) {
+        router.push(`/diagnosis?predictions=${encodeURIComponent(JSON.stringify(data.predictions))}&plant=${selectedPlant}`);
+      } else {
+        throw new Error('Invalid response from analysis service');
+      }
     } catch (error) {
       console.error('API call failed:', error);
     } finally {
@@ -103,38 +109,42 @@ const ScanPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen py-2 px-3 sm:px-4 lg:px-8 animate-fade-in">
-      <div className="max-w-6xl mx-auto">
-        <ScanLayout
-          selectedImage={selectedImage}
-          isProcessing={isProcessing}
-          isDragging={isDragging}
-          showCamera={showCamera}
-          stream={stream}
-          cameraReady={cameraReady}
-          cameraError={cameraError}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onBrowseFiles={browseFiles}
-          onStartCamera={handleStartCamera}
-          onClearImage={clearImage}
-          onAnalyze={handleAnalyze}
-          onCapturePhoto={handleCapturePhoto}
-          onStopCamera={handleStopCamera}
-          onDismissError={() => setCameraError(null)}
-        />
+    <div className="min-h-screen bg-gradient-to-br from-cream via-soft-beige to-pale">
+      <main className="pt-20 sm:pt-24 pb-6 sm:pb-8 lg:pb-12">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+          <ScanLayout
+            selectedImage={selectedImage}
+            isProcessing={isProcessing}
+            isDragging={isDragging}
+            selectedPlant={selectedPlant}
+            showCamera={showCamera}
+            stream={stream}
+            cameraReady={cameraReady}
+            cameraError={cameraError}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            onBrowseFiles={browseFiles}
+            onStartCamera={handleStartCamera}
+            onPlantChange={setSelectedPlant}
+            onClearImage={clearImage}
+            onAnalyze={handleAnalyze}
+            onCapturePhoto={handleCapturePhoto}
+            onStopCamera={handleStopCamera}
+            onDismissError={() => setCameraError(null)}
+          />
 
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFileInputChange}
-          className="hidden"
-        />
-        
-        <canvas ref={canvasRef} className="hidden" />
-      </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileInputChange}
+            className="hidden"
+          />
+          
+          <canvas ref={canvasRef} className="hidden" />
+        </div>
+      </main>
     </div>
   );
 };

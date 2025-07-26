@@ -1,146 +1,263 @@
 'use client';
-export const dynamic = 'force-dynamic';
 
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { useSession, signIn } from 'next-auth/react';
-import sendFeedback from "@/helpers/send_feeback";
+import { useState, useRef } from 'react';
+import { Star, Send, CheckCircle, Leaf, Heart, MessageCircle } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+
+interface FeedbackType {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+}
+
+const feedbackTypes: FeedbackType[] = [
+  { id: 'suggestion', label: 'Suggestion', icon: <Leaf className="w-4 h-4" />, color: 'bg-green-100 text-green-700 border-green-200' },
+  { id: 'compliment', label: 'Compliment', icon: <Heart className="w-4 h-4" />, color: 'bg-pink-100 text-pink-700 border-pink-200' },
+  { id: 'issue', label: 'Issue', icon: <MessageCircle className="w-4 h-4" />, color: 'bg-blue-100 text-blue-700 border-blue-200' },
+];
 
 export default function FeedbackPage() {
   const [rating, setRating] = useState(0);
-  const [description, setDescription] = useState('');
-  const { data: session, status } = useSession();
+  const [hoverRating, setHoverRating] = useState(0);
+  const [feedback, setFeedback] = useState('');
+  const [selectedType, setSelectedType] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState<{ rating?: string; feedback?: string; type?: string }>({});
+  
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const user_id = session?.user._id ?? '';
-  const email = session?.user.email ?? '';
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-
-    console.log(email, user_id)
-    if (email === '' || !email || !user_id) {
-      signIn('google');
-    }
-
-    e.preventDefault();
-
-
-    try {
-      await sendFeedback({ email, userID: user_id, description, stars: rating });
-      setDescription('');
-      setRating(0);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleStarClick = (starRating: number) => {
+    setRating(starRating);
+    setErrors(prev => ({ ...prev, rating: undefined }));
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-white flex items-center justify-center py-8 px-2 relative overflow-hidden">
-      {/* Leaf image */}
-      <div className="hidden lg:block absolute right-96 bottom-20 z-0 opacity-70 pointer-events-none select-none">
-        <Image
-          src="/leaf_image.png"
-          alt="Leaf"
-          width={200}
-          height={200}
-          className="select-none opacity-10 rotate-45"
-          priority
-        />
-      </div>
+  const handleStarHover = (starRating: number) => {
+    setHoverRating(starRating);
+  };
 
-      {/* Feedback Card */}
-      <div
-        className="relative z-10 max-w-md w-full mx-auto rounded-2xl shadow-xl p-6 sm:p-10 space-y-7"
-        style={{
-          background: "rgba(255,255,255,0.5)",
-          backdropFilter: "blur(2px)",
-          WebkitBackdropFilter: "blur(2px)",
-          border: "1px solid rgba(180,220,180,0.08)",
-        }}
-      >
-        {/* Logo */}
-        <div className="flex items-center justify-center mb-2">
-          <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-2 overflow-hidden">
-            <Image src="/logo.jpeg" alt="Logo" width={40} height={40} />
+  const handleStarLeave = () => {
+    setHoverRating(0);
+  };
+
+  const validateForm = () => {
+    const newErrors: typeof errors = {};
+    
+    if (!rating) {
+      newErrors.rating = 'Please select a rating';
+    }
+    
+    if (!feedback.trim()) {
+      newErrors.feedback = 'Please write your feedback';
+    } else if (feedback.trim().length < 10) {
+      newErrors.feedback = 'Please provide more detailed feedback (at least 10 characters)';
+    }
+    
+    if (!selectedType) {
+      newErrors.type = 'Please select a feedback type';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+    
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      setIsSubmitted(false);
+      setRating(0);
+      setFeedback('');
+      setSelectedType('');
+      setErrors({});
+    }, 3000);
+  };
+
+  const getRatingText = (currentRating: number) => {
+    const texts = ['', 'Poor', 'Fair', 'Good', 'Very Good', 'Excellent'];
+    return texts[currentRating] || '';
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-8 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <CheckCircle className="w-8 h-8 text-green-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Thank You!</h2>
+            <p className="text-gray-600 mb-4">Your feedback has been submitted successfully.</p>
+            <div className="flex justify-center space-x-1 mb-4">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`w-5 h-5 ${star <= rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                />
+              ))}
+            </div>
+            <p className="text-sm text-gray-500">We appreciate your {getRatingText(rating).toLowerCase()} review!</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-12 px-4">
+      <div className="max-w-2xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center mx-auto mb-4">
+            <Leaf className="w-8 h-8 text-emerald-600" />
           </div>
-          <span className="text-green-700 text-xl font-bold tracking-wide">
-            PLANT MD
-          </span>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">We Value Your Feedback</h1>
+          <p className="text-gray-600 max-w-md mx-auto">
+            Help us improve by sharing your experience. Your input shapes our future updates.
+          </p>
         </div>
 
-        {/* Header */}
-        <h2 className="text-2xl font-semibold text-green-700 text-center">
-          Share Your Feedback
-        </h2>
-        <p className="text-gray-500 text-center -mt-2">
-          Help us improve your plant health experience
-        </p>
+        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+          <CardContent className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Feedback Type Selection */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold text-gray-900">What type of feedback is this?</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {feedbackTypes.map((type) => (
+                    <button
+                      key={type.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedType(type.id);
+                        setErrors(prev => ({ ...prev, type: undefined }));
+                      }}
+                      className={`
+                        p-4 rounded-lg border-2 transition-all duration-200 text-sm font-medium
+                        flex items-center justify-center space-x-2 hover:scale-105 hover:shadow-md
+                        ${selectedType === type.id 
+                          ? `${type.color} border-current shadow-md` 
+                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                        }
+                      `}
+                    >
+                      {type.icon}
+                      <span>{type.label}</span>
+                    </button>
+                  ))}
+                </div>
+                {errors.type && (
+                  <p className="text-sm text-red-600 animate-fade-in">{errors.type}</p>
+                )}
+              </div>
 
-        {/* Feedback Form */}
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          <textarea
-            placeholder="Feedback"
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full rounded-lg border border-gray-200 focus:border-green-400 px-4 py-2 outline-none resize-none bg-white/80"
-          />
+              {/* Star Rating */}
+              <div className="space-y-3">
+                <Label className="text-base font-semibold text-gray-900">How would you rate your experience?</Label>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="flex space-x-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onMouseEnter={() => handleStarHover(star)}
+                        onMouseLeave={handleStarLeave}
+                        onClick={() => handleStarClick(star)}
+                        className="p-1 rounded-full hover:bg-yellow-50 transition-all duration-200 transform hover:scale-110"
+                      >
+                        <Star
+                          className={`w-8 h-8 transition-all duration-200 ${
+                            star <= (hoverRating || rating)
+                              ? 'fill-yellow-400 text-yellow-400 drop-shadow-sm'
+                              : 'text-gray-300 hover:text-yellow-300'
+                          }`}
+                        />
+                      </button>
+                    ))}
+                  </div>
+                  {(rating > 0 || hoverRating > 0) && (
+                    <p className="text-sm font-medium text-gray-700 animate-fade-in">
+                      {getRatingText(hoverRating || rating)}
+                    </p>
+                  )}
+                </div>
+                {errors.rating && (
+                  <p className="text-sm text-red-600 text-center animate-fade-in">{errors.rating}</p>
+                )}
+              </div>
 
-          {/* Star Rating */}
-          <div className="flex items-center justify-center space-x-1 pt-2">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <button
-                type="button"
-                key={i}
-                onClick={() => setRating(i)}
-                className="focus:outline-none"
-                aria-label={`Rate ${i} star${i > 1 ? "s" : ""}`}
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  fill={i <= rating ? "#22c55e" : "none"}
-                  stroke="#22c55e"
-                  strokeWidth="2"
-                  className="transition-all"
-                >
-                  <polygon
-                    points="14,3 17.09,10.9 25.51,11.18 18.94,16.51 21.18,24.02 14,19.5 6.82,24.02 9.06,16.51 2.49,11.18 10.91,10.9"
-                    strokeLinejoin="round"
+              {/* Feedback Text */}
+              <div className="space-y-3">
+                <Label htmlFor="feedback" className="text-base font-semibold text-gray-900">
+                  Tell us more about your experience
+                </Label>
+                <div className="relative">
+                  <Textarea
+                    ref={textareaRef}
+                    id="feedback"
+                    value={feedback}
+                    onChange={(e) => {
+                      setFeedback(e.target.value);
+                      setErrors(prev => ({ ...prev, feedback: undefined }));
+                    }}
+                    placeholder="What did you like? What could we improve? Any specific features you'd love to see?"
+                    className={`min-h-[120px] resize-none text-base leading-relaxed transition-all duration-200 ${
+                      errors.feedback ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
+                    }`}
                   />
-                </svg>
-              </button>
-            ))}
-          </div>
+                  <div className="absolute bottom-3 right-3 text-xs text-gray-400">
+                    {feedback.length}/500
+                  </div>
+                </div>
+                {errors.feedback && (
+                  <p className="text-sm text-red-600 animate-fade-in">{errors.feedback}</p>
+                )}
+              </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 transition text-white font-semibold rounded-lg py-2 mt-2 text-lg shadow focus:outline-none"
-          >
-            Send Feedback
-          </button>
-        </form>
+              {/* Submit Button */}
+              <Button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full h-12 text-base font-semibold bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Sending Feedback...</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <Send className="w-4 h-4" />
+                    <span>Send Feedback</span>
+                  </div>
+                )}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
 
-        {/* Appreciation Note */}
-        <div className="text-center text-gray-600 text-sm pt-3 flex items-center justify-center">
-          We value every leaf of your opinion
-          <svg width="18" height="18" fill="none" className="ml-1">
-            <path
-              d="M16 4C13 5 8 10 7 14C6.5 16.5 3 15 3 11C3 7.5 6 3.5 12 2"
-              stroke="#22c55e"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <ellipse
-              cx="13"
-              cy="5.5"
-              rx="2"
-              ry="2.5"
-              fill="#22c55e"
-              fillOpacity={0.3}
-            />
-          </svg>
+        {/* Footer */}
+        <div className="text-center mt-8">
+          <p className="text-sm text-gray-500">
+            Your feedback helps us create a better experience for everyone.
+          </p>
         </div>
       </div>
     </div>
