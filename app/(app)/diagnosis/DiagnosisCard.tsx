@@ -25,45 +25,65 @@ export default function DiagnosisCard({
   confidenceColor = 'text-green-700',
 }: DiagnosisCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 mb-6">
-      <div className="flex justify-between items-start mb-2">
+    <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 p-6 mb-6 border border-gray-100">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-2">
-          <div className="text-yellow-500">
+          <div className="text-green-600">
             <svg
-              className="w-5 h-5"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
               viewBox="0 0 24 24"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-.01-6a9 9 0 110 18 9 9 0 010-18z" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v2m0 4h.01m-.01-6a9 9 0 110 18 9 9 0 010-18z"
+              />
             </svg>
           </div>
-          <h2 className="text-lg font-semibold text-green-900">{disease}</h2>
+          <h2 className="text-xl font-bold text-gray-900">{disease}</h2>
         </div>
-        <div className={`font-semibold text-sm px-3 py-1 rounded ${confidenceColor} bg-green-100`}>
+        <span
+          className={`font-semibold text-xs md:text-sm px-3 py-1 rounded-full ${confidenceColor} bg-green-50`}
+        >
           {confidence}% confident
-        </div>
+        </span>
       </div>
 
-      <div className={`inline-block px-2 py-1 rounded text-xs font-medium mb-2 ${severityColor}`}>
+      {/* Severity */}
+      <span
+        className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-3 ${severityColor}`}
+      >
         {severity}
-      </div>
+      </span>
 
-      <p className="text-sm text-gray-700 mb-4">{description}</p>
+      {/* Description */}
+      <p className="text-gray-700 text-sm leading-relaxed mb-5">{description}</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+      {/* Divider */}
+      <hr className="border-gray-200 mb-4" />
+
+      {/* Symptoms & Causes */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
         <div>
-          <h3 className="font-medium text-red-700 mb-1">⚠️ Symptoms Detected</h3>
-          <ul className="list-disc ml-5 text-gray-600">
+          <h3 className="font-semibold text-red-700 mb-2 flex items-center">
+            ⚠️ <span className="ml-1">Symptoms Detected</span>
+          </h3>
+          <ul className="list-disc ml-5 text-gray-600 space-y-1">
             {symptoms.map((s, i) => (
               <li key={i}>{s}</li>
             ))}
           </ul>
         </div>
+
         <div>
-          <h3 className="font-medium text-blue-700 mb-1">💡 Likely Causes</h3>
-          <ul className="list-disc ml-5 text-gray-600">
+          <h3 className="font-semibold text-blue-700 mb-2 flex items-center">
+            💡 <span className="ml-1">Likely Causes</span>
+          </h3>
+          <ul className="list-disc ml-5 text-gray-600 space-y-1">
             {causes.map((c, i) => (
               <li key={i}>{c}</li>
             ))}

@@ -4,6 +4,7 @@ import React, { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
 import { Roboto, Lato, Oswald } from "next/font/google";
 import { SessionProvider } from 'next-auth/react';
+import { PostHogProvider } from 'posthog-js/react';
 // import { SessionProvider } from 'next-auth/react'; // Temporarily disabled for static export
 
 
@@ -37,11 +38,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <SessionProvider>
-      <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
-        <main className="">
-          {children}
-        </main>
-      </div>
+      <PostHogProvider apiKey={process.env.NEXT_PUBLIC_POSTHOG_KEY || ''}>
+        <div className={` bg-gradient-to-br from-cream via-white to-pale ${roboto.variable} ${lato.variable} ${oswald.variable}`}>
+          <main className="">
+            {children}
+          </main>
+        </div>
+      </PostHogProvider>
     </SessionProvider>
   );
 };
