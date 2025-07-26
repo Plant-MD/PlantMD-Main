@@ -1,11 +1,18 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export const useImageUpload = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Debug: Log when selectedImage changes
+  useEffect(() => {
+    if (selectedImage) {
+      console.log('Image selected and set:', selectedImage.substring(0, 30) + '...');
+    }
+  }, [selectedImage]);
 
   const handleFileSelect = (file: File) => {
     if (file && file.type.startsWith('image/')) {
@@ -13,7 +20,12 @@ export const useImageUpload = () => {
       reader.onload = (e) => {
         setSelectedImage(e.target?.result as string);
       };
+      reader.onerror = (e) => {
+        console.error('File reading error:', e);
+      };
       reader.readAsDataURL(file);
+    } else {
+      alert('Please select a valid image file (JPG, PNG, WebP, etc.)');
     }
   };
 
@@ -56,7 +68,7 @@ export const useImageUpload = () => {
 
   return {
     selectedImage,
-    setSelectedImage, // Added this line
+    setSelectedImage,
     isDragging,
     fileInputRef,
     handleDragOver,

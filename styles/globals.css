@@ -2,6 +2,183 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom animations for diagnosis page */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Flare animation for Coming Soon button */
+@keyframes flare {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+/* Green flare sweep animation for diagnosis page */
+@keyframes flare-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-flare {
+  animation: flare 2s ease-in-out infinite;
+}
+
+.animate-flare-sweep {
+  animation: flare-sweep 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Enhanced hover effects */
+.hover-lift {
+  transition: all 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient text animation */
+.gradient-text {
+  background: linear-gradient(45deg, #10b981, #059669, #047857, #065f46);
+  background-size: 300% 300%;
+  animation: gradient-shift 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Enhanced gradient text animation for titles */
+.animate-gradient-x {
+  background: linear-gradient(45deg, #10b981, #059669, #047857, #065f46, #10b981);
+  background-size: 200% 200%;
+  animation: gradient-shift-x 4s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes gradient-shift-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Coming Soon button enhancements */
+.coming-soon-flare {
+  position: relative;
+  overflow: hidden;
+}
+
+.coming-soon-flare::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-12deg);
+  transition: left 0.8s ease-out;
+}
+
+.coming-soon-flare:hover::before {
+  left: 100%;
+}
+
+/* Auto-flare animation */
+.coming-soon-flare-auto::before {
+  animation: flare 2s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -11,7 +188,7 @@ body {
     text-wrap: balance;
   }
 }
-
+  
 @layer base {
   :root {
     --background: 0 0% 100%;

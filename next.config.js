@@ -20,6 +20,13 @@ const nextConfig = {
     ],
     unoptimized: true,
   },
+  // Suppress hydration warnings for CSS variables
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
+  // Suppress hydration warnings
+  reactStrictMode: false,
 }
 
 module.exports = nextConfig

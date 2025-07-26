@@ -19,9 +19,16 @@ export default function PostHogProvider({ children }: Props) {
         person_profiles: 'identified_only',
       })
     } else {
-      console.warn('PostHog API key not found in environment variables')
+      // Disable PostHog for testing when no API key is provided
+      console.log('PostHog disabled - no API key provided')
     }
   }, [])
+
+  // If no PostHog key, render children without PostHog provider
+  const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY
+  if (!posthogKey) {
+    return <>{children}</>
+  }
 
   return <PHProvider client={posthog}>{children}</PHProvider>
 }
