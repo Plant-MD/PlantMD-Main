@@ -4,10 +4,20 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
+    const plant = formData.get('plant') as string;
+
+    console.log('Received request with plant type:', plant);
 
     if (!file) {
       return NextResponse.json(
         { error: 'No file provided' },
+        { status: 400 }
+      );
+    }
+
+    if (!plant || !['tomato', 'corn'].includes(plant)) {
+      return NextResponse.json(
+        { error: 'Invalid plant type. Must be either "tomato" or "corn"' },
         { status: 400 }
       );
     }
@@ -30,25 +40,53 @@ export async function POST(request: NextRequest) {
     const externalFormData = new FormData();
     externalFormData.append('file', file);
 
-    const response = await fetch(
-      'https://ec2-3-76-37-144.eu-central-1.compute.amazonaws.com:8000/predict',
-      {
-        method: 'POST',
-        body: externalFormData,
+    const apiUrl = new URL('https://api.plantmd.xyz/predict');
+    apiUrl.searchParams.append('plant', plant);
 
-        signal: AbortSignal.timeout(30000), 
-      }
-    );
+    console.log('Sending request to external API URL:', apiUrl.toString());
+
+    const response = await fetch(apiUrl.toString(), {
+      method: 'POST',
+      body: externalFormData,
+      signal: AbortSignal.timeout(30000),
+    });
+
+    console.log('External API response status:', response.status);
 
     if (!response.ok) {
-      console.error('External API error:', response.status, response.statusText);
+      let errorDetails = '';
+      try {
+        const errorBody = await response.text();
+        console.log('External API error body:', errorBody);
+        errorDetails = errorBody;
+      } catch (e) {
+        console.log('Could not read error body');
+      }
+
+      console.error('External API error:', response.status, response.statusText, errorDetails);
+      
+      if (response.status === 422) {
+        return NextResponse.json(
+          { 
+            error: 'The selected plant type or image format is not supported by the analysis service. Please try a different image or plant type.',
+            details: errorDetails,
+            status: response.status
+          },
+          { status: 422 }
+        );
+      }
+      
       return NextResponse.json(
-        { error: `Analysis service unavailable. Please try again later. (${response.status})` },
+        { 
+          error: `Analysis service unavailable. Please try again later. (${response.status})`,
+          details: errorDetails
+        },
         { status: 502 }
       );
     }
 
     const data = await response.json();
+    console.log('External API response data:', data);
 
     if (!data.predictions || !Array.isArray(data.predictions)) {
       console.error('Invalid response structure from external API:', data);
@@ -60,7 +98,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      predictions: data.predictions
+      predictions: data.predictions,
+      plant: plant,
+      message: `${plant.charAt(0).toUpperCase() + plant.slice(1)} analysis completed successfully`
     });
 
   } catch (error) {
