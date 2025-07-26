@@ -61,10 +61,12 @@ function Header() {
                             </Link>
                         ))}
                         <Link
-                            href="/scan"
-                            className="bg-white border-2 border-green-600 text-green-700 px-4 lg:px-6 py-1  transition-all duration-300 shadow-sm hover:shadow-md font-roboto"
+                            href="#"
+                            className="relative bg-gray-100 border-2 border-gray-300 text-gray-500 px-4 lg:px-6 py-1 cursor-not-allowed opacity-60 font-roboto overflow-hidden group"
+                            onClick={(e) => e.preventDefault()}
                         >
-                            Scan Now
+                            <span className="relative z-10">Coming Soon</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12 animate-flare"></div>
                         </Link>
 
                         {session ? (
@@ -122,11 +124,15 @@ function Header() {
 
                         {/* Mobile Use App Button */}
                         <Link
-                            href="/scan"
-                            onClick={closeMenu}
-                            className="block mx-4 bg-plant-dark hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-colors font-roboto text-center"
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                closeMenu()
+                            }}
+                            className="block mx-4 bg-gray-100 text-gray-500 px-4 py-2 rounded-md cursor-not-allowed opacity-60 font-roboto text-center relative overflow-hidden group"
                         >
-                            Use App
+                            <span className="relative z-10">Coming Soon</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -skew-x-12 animate-flare"></div>
                         </Link>
 
                         {/* Mobile Auth Button */}

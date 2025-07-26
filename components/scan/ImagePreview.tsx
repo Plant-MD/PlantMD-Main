@@ -16,6 +16,11 @@ const ImagePreview: React.FC<ImagePreviewProps> = ({
   onClearImage,
   onAnalyze
 }) => {
+  console.log('ImagePreview render:', {
+    hasImage: !!selectedImage,
+    imageLength: selectedImage?.length,
+    isProcessing
+  });
   return (
     <div className="space-y-4 sm:space-y-8">
       <div className="relative group">

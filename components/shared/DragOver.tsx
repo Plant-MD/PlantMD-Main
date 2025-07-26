@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
 
 interface DragOverComponentProps {
@@ -7,6 +7,7 @@ interface DragOverComponentProps {
   title?: string;
   subtitle?: string;
   className?: string;
+  fileInputRef?: React.RefObject<HTMLInputElement>;
 }
 
 function DragOverComponent({
@@ -14,8 +15,13 @@ function DragOverComponent({
   title = "Upload Plant Photo",
   subtitle = "Get instant diagnosis & treatment",
   className = "",
+  fileInputRef,
 }: DragOverComponentProps) {
   const [isDragOver, setIsDragOver] = useState(false);
+  const internalFileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Use provided fileInputRef or fall back to internal one
+  const currentFileInputRef = fileInputRef || internalFileInputRef;
 
   // Handle drag-and-drop events
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -43,6 +49,10 @@ function DragOverComponent({
     if (files && files.length > 0) {
       onDrop(files);
     }
+  };
+
+  const handleSelectImageClick = () => {
+    currentFileInputRef.current?.click();
   };
 
   return (
@@ -88,27 +98,23 @@ function DragOverComponent({
             </svg>
             Take Photo
           </Button>
-          <label htmlFor="file-upload">
-            <Button
-              size="lg"
-              className="rounded-xl w-full cursor-pointer bg-gradient-to-r from-green-600 to-emerald-600 py-3 font-semibold text-white shadow-md hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300"
-              asChild
-            >
-              <span>
-                <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                Select Image
-              </span>
-            </Button>
-          </label>
+          <Button
+            size="lg"
+            className="rounded-xl w-full cursor-pointer bg-gradient-to-r from-green-600 to-emerald-600 py-3 font-semibold text-white shadow-md hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300"
+            onClick={handleSelectImageClick}
+          >
+            <svg className="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            Select Image
+          </Button>
           <input
-            id="file-upload"
+            ref={currentFileInputRef}
             type="file"
             accept="image/*"
             className="hidden"
