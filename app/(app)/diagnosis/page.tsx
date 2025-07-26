@@ -4,6 +4,9 @@ export const dynamic = 'force-dynamic';
 import React, { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import DiagnosisCard from './DiagnosisCard';
+import DiagnosisHeader from './components/DiagnosisHeader';
+import DiagnosisActions from './components/DiagnosisActions';
+import DiagnosisSummary from './components/DiagnosisSummary';
 import { useSearchParams } from 'next/navigation';
 
 export default function DiagnosisPage() {
@@ -44,6 +47,24 @@ export default function DiagnosisPage() {
     setLoading(false);
   }, [searchParams]);
 
+  // Calculate statistics
+  const diagnosisCount = diagnoses.length;
+  const totalConfidence = diagnosisCount > 0 
+    ? diagnoses.reduce((sum, d) => sum + d.confidence, 0) / diagnosisCount 
+    : 0;
+
+  const handleSaveReport = () => {
+    // Implementation for saving report
+    console.log('Saving diagnosis report...');
+    // You can implement actual save functionality here
+  };
+
+  const handleShareResults = () => {
+    // Implementation for sharing results
+    console.log('Sharing diagnosis results...');
+    // You can implement actual share functionality here
+  };
+
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
@@ -54,48 +75,47 @@ export default function DiagnosisPage() {
       </div>
     }>
       <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 px-6 py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Clean Header */}
-          <div className="text-center mb-16">
-            {/* Professional Success Icon */}
-            <div className="relative mx-auto mb-8 w-20 h-20">
-              <div className="w-full h-full rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-lg relative overflow-hidden">
-                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-                {/* Green flare animation */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-green-300/40 to-transparent -skew-x-12 animate-flare-sweep"></div>
-              </div>
-              {/* Subtle pulse ring */}
-              <div className="absolute inset-0 rounded-full border-2 border-green-300 animate-pulse"></div>
-            </div>
-            
-            {/* Clean Title */}
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Diagnosis Complete
-            </h1>
-            
-            {/* Professional Description */}
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Our AI has analyzed your plant and identified potential issues. Review the detailed analysis below.
-            </p>
-          </div>
-
-          {/* Clean Results Section */}
+        <div className="max-w-6xl mx-auto">
+          {/* Loading State */}
           {loading ? (
             <div className="text-center py-16">
               <div className="animate-spin rounded-full h-12 w-12 border-3 border-green-200 border-t-green-600 mx-auto mb-4"></div>
               <p className="text-green-700 font-medium">Processing your results...</p>
             </div>
           ) : diagnoses.length > 0 ? (
-            <div className="space-y-6">
-              {diagnoses.map((item, i) => (
-                <div key={i} className="animate-fade-in-up" style={{ animationDelay: `${i * 150}ms` }}>
-                  <DiagnosisCard {...item} />
-                </div>
-              ))}
-            </div>
+            <>
+              {/* Diagnosis Header */}
+              <DiagnosisHeader 
+                diagnosisCount={diagnosisCount}
+                totalConfidence={totalConfidence}
+              />
+
+              {/* Diagnosis Summary */}
+              <DiagnosisSummary diagnoses={diagnoses} />
+
+              {/* Detailed Diagnosis Cards */}
+              <div className="space-y-6 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Detailed Analysis
+                </h2>
+                {diagnoses.map((item, i) => (
+                  <div key={i} className="animate-fade-in-up" style={{ animationDelay: `${i * 150}ms` }}>
+                    <DiagnosisCard {...item} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Action Buttons */}
+              <DiagnosisActions 
+                onSaveReport={handleSaveReport}
+                onShareResults={handleShareResults}
+              />
+            </>
           ) : (
+            /* No Results State */
             <div className="bg-white rounded-2xl shadow-lg p-8 text-center max-w-md mx-auto">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -112,20 +132,6 @@ export default function DiagnosisPage() {
               </Link>
             </div>
           )}
-
-          {/* Clean Footer */}
-          <div className="mt-16 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/" passHref>
-              <button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                Scan Another Plant
-              </button>
-            </Link>
-            <Link href="/feedback" passHref>
-              <button className="bg-white border border-green-600 text-green-700 hover:bg-green-50 px-8 py-3 rounded-lg font-medium transition-colors">
-                Share Feedback
-              </button>
-            </Link>
-          </div>
         </div>
       </div>
     </Suspense>
