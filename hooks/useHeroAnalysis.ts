@@ -28,10 +28,6 @@ export const useHeroAnalysis = () => {
   };
 
   const handleStartCamera = async () => {
-    if (!session) {
-      router.push('/auth/signin');
-      return;
-    }
     await cameraHook.startCamera();
     setShowCamera(true);
   };
@@ -50,18 +46,10 @@ export const useHeroAnalysis = () => {
   };
 
   const handleBrowseFiles = () => {
-    if (!session) {
-      router.push('/auth/signin');
-      return;
-    }
     uploadHook.browseFiles();
   };
 
   const handleAnalyze = async () => {
-    if (!session) {
-      router.push('/auth/signin');
-      return;
-    }
 
     if (!uploadHook.selectedImage) return;
 

@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useHeroAnalysis } from "@/hooks/useHeroAnalysis";
 import HeroHeader from "./components/HeroHeader";
 import HeroUploadContainer from "./components/HeroUploadContainer";
-import HeroAuthNotice from "./components/HeroAuthNotice";
 
 function Hero() {
   const {
@@ -92,7 +91,6 @@ function Hero() {
             onFileInputChange={uploadHook.handleFileInputChange}
           />
 
-          <HeroAuthNotice session={session} />
         </div>
       </div>
     </section>
