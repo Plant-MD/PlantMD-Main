@@ -5,6 +5,25 @@ import dbConnect from "@/lib/dbConnect";
 import FeedbackModel from "@/models/Feedback";
 import UserModel from "@/models/User";
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Handles POST requests to the /api/user/feedback route.
+ * 
+ * Request body must contain the following fields:
+ * 
+ * - `email`: The user's email address
+ * - `userID`: The user's ID
+ * - `stars`: The user's rating (1-5)
+ * - `description`: The user's feedback
+ * - `type`: The type of feedback (suggestion, compliment, or issue)
+ * 
+ * If the request is successful, a JSON response with a success flag and a message
+ * is returned. If the request is invalid, a JSON response with a success flag set
+ * to false and an error message is returned. If an error occurs while processing
+ * the request, a JSON response with a success flag set to false and an error
+ * message is returned with a status code of 500.
+ */
+/*******  3a97d244-b768-4529-a812-0df8cbb463a2  *******/
 export async function POST(request: NextRequest) {
     await dbConnect(); 
     try {

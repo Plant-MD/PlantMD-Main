@@ -21,7 +21,7 @@ function DiagnosisCard(props: DiseaseResponse) {
   };
 
   return (
-    <div className="cursor-pointer mt-5" onClick={handleFlip}>
+    <div className="cursor-pointer mt-8" onClick={handleFlip}>
       {/* Front Side - Disease Information */}
       <div>
         <div className="text-xl font-bold text-white bg-green-900 py-4 px-6 rounded-t-xl flex justify-start items-center gap-2">
