@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
                 .min(1, "Rating must be at least 1 star")
                 .max(5, "Rating cannot exceed 5 stars"),
             description: z.string()
-                .min(10, "Feedback must be at least 10 characters long")
+                .min(5, "Feedback must be at least 5 characters long")
                 .max(500, "Feedback cannot exceed 500 characters"),
             type: z.enum(['suggestion', 'compliment', 'issue'], {
                 errorMap: () => ({ message: "Type must be 'suggestion', 'compliment', or 'issue'" })
