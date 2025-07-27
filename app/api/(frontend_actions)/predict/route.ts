@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     // Search Disease collection by disease_name
     const disease = await DiseaseModel.findOne({
-      disease_name: { $regex: new RegExp(`^${diseaseName}$`, 'i') }
+      disease_name: diseaseName
     }).lean();
 
     if (!disease) {

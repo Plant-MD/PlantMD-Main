@@ -21,7 +21,7 @@ function Diagnosis() {
         const responses = await Promise.all(
           predictions.map((prediction: any) => {
             // Replace underscores with space before encoding
-            const diseaseName = prediction.class.replace(/_/g, " ");
+            const diseaseName = prediction.class;
             const confidence = prediction.confidence;
 
             return axios.get(
@@ -37,6 +37,7 @@ function Diagnosis() {
     };
 
     fetchPlants();
+    console.log(plants)
   }, []);
 
   return (
