@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import CureModel from "@/models/Cure";
@@ -22,7 +24,7 @@ export async function GET(request: NextRequest) {
 
     // Search Disease collection by disease_name
     const disease = await DiseaseModel.findOne({
-      disease_name: { $regex: new RegExp(`^${diseaseName}$`, 'i') }
+      disease_name: diseaseName
     }).lean();
 
     if (!disease) {
@@ -36,9 +38,11 @@ export async function GET(request: NextRequest) {
     // Get related cure data using disease_id
     const cure = await CureModel.findOne({ disease_id: disease._id }).lean() || {};
 
+
+    const perc = confidence ? Number(confidence) * 100 : 0;
     // Return combined disease and cure info
     return NextResponse.json(
-      { success: true, disease, cure, confidence: confidence * 100 },
+      { success: true, disease, cure, confidence: perc},
       { status: 200 }
     );
 
