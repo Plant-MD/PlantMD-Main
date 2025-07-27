@@ -55,7 +55,7 @@ function Hero() {
       <div className="flex w-full h-screen">
         <div className="w-1/2 relative hidden md:block">
           <Image
-            src="/hero_bg.jpg"
+            src="/hero_bg.png"
             alt="temp_background"
             fill
             className="object-cover"
