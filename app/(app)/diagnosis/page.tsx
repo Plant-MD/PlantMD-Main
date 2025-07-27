@@ -2,6 +2,7 @@ import React from 'react'
 import data from './data.json' assert { type: 'json' }; // Import JSON as an object
 import DiagnosisCard from '@/components/shared/DiagnosisCard';
 
+
 function Diagnosis() {
   return (
     <div className="min-h-screen bg-white">
