@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const diseaseName = searchParams.get("disease_name");
+    const confidence = searchParams.get("confidence");
 
     if (!diseaseName) {
       return NextResponse.json(
@@ -29,13 +30,13 @@ export async function GET(request: NextRequest) {
         { status: 404 }
       );
     }
-    
+
     // Get related cure data using disease_id
     const cure = await CureModel.findOne({ disease_id: disease._id }).lean() || {};
 
     // Return combined disease and cure info
     return NextResponse.json(
-      { success: true, disease, cure },
+      { success: true, disease, cure, confidence: confidence },
       { status: 200 }
     );
 
