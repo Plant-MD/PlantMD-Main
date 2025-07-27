@@ -17,7 +17,6 @@ export default function DiagnosisPage() {
     if (queryPredictions) {
       try {
         const decodedPredictions = JSON.parse(decodeURIComponent(queryPredictions));
-        // Map the predictions to match DiagnosisCard props
         const formattedDiagnoses = decodedPredictions.map((item: any) => ({
           disease: item.class,
           confidence: parseFloat(item.confidence) * 100, // Convert to percentage
@@ -52,7 +51,6 @@ export default function DiagnosisPage() {
             <p className="text-gray-600 mt-2">We’ve identified potential issues with your plant. Review the detailed analysis below.</p>
           </div>
 
-          {/* Diagnosis Results */}
           {loading ? (
             <p className="text-center text-gray-600">Loading...</p>
           ) : diagnoses.length > 0 ? (
@@ -66,7 +64,7 @@ export default function DiagnosisPage() {
 
           {/* Footer */}
           <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-            <Link href="/scan" passHref>
+            <Link href="/" passHref>
               <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-medium transition">
                 Scan Another Plant
               </button>
