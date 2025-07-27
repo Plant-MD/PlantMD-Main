@@ -19,6 +19,9 @@ function DiagnosisCard(props: DiseaseResponse) {
     if (confidence <= 75) return "Likely";
     return "Fully confident";
   };
+  const formatConfidence = (confidence: number) => {
+    return (confidence).toFixed(2);
+  };
 
   return (
     <div className="cursor-pointer mt-8" onClick={handleFlip}>
@@ -32,7 +35,7 @@ function DiagnosisCard(props: DiseaseResponse) {
               variant="secondary"
               className="text-xs font-light font-mono bg-white text-black hover:bg-white ml-2"
             >
-              {getConfidenceLabel(Math.round(props.confidence * 100) / 100)}
+              {getConfidenceLabel(props.confidence)}
             </Badge>
           </span>
         </div>
@@ -63,7 +66,7 @@ function DiagnosisCard(props: DiseaseResponse) {
               <p className="text-xs text-black italic mt-auto">Click to view cures</p>
             </div>
             <div className="w-full text-4xl font-oswald flex flex-col items-center justify-center">
-              {props.confidence}%
+              {formatConfidence(props.confidence)}%
             </div>
           </div>
         </>
