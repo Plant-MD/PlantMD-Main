@@ -285,10 +285,6 @@ function Hero() {
               By uploading, you agree to our{" "}
               <Link href="/terms" className="text-green-600 underline hover:text-green-700">
                 Terms
-              </Link>{" "}
-              &{" "}
-              <Link href="/privacy" className="text-green-600 underline hover:text-green-700">
-                Privacy Policy
               </Link>
             </p>
           </div>
