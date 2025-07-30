@@ -34,20 +34,6 @@ export default function FeedbackPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-white rounded-full shadow-lg flex items-center justify-center mx-auto mb-4">
-           <Image
-              src="/logo.png"
-              alt="Feedback Icon"
-              width={32}
-              height={32}
-            >
-
-           </Image>
-          </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">We Value Your Feedback</h1>
-         
-        </div>
 
         <FeedbackForm 
           userEmail={session.user.email} 

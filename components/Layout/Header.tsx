@@ -125,7 +125,7 @@ function Header() {
                             <Link
                                 href="/feedback"
                                 onClick={closeMenu}
-                                className="block mx-4 bg-white border-2 border-green-600 text-green-700 px-4 py-2 rounded-md transition-colors font-roboto text-center"
+                                className="block mx-4 bg-white border-2 border-green-600 text-leaf-green px-4 py-2 rounded-md transition-colors font-roboto text-center"
                             >
                                 Give Feedback
                             </Link>

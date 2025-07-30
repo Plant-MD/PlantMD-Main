@@ -42,7 +42,7 @@ interface CornerFrameProps {
 
 function CornerFrame({ position }: CornerFrameProps) {
   const baseClass = "absolute z-20 pointer-events-none";
-  const frameStyle = "bg-green-700 bg-[url('/textures/parallel-veins.svg')] bg-[length:100%_100%]";
+  const frameStyle = "bg-forest-green bg-[url('/textures/parallel-veins.svg')] bg-[length:100%_100%]";
 
   const positions: Record<CornerPosition, { container: string; horiz: string; vert: string }> = {
     "top-left": {

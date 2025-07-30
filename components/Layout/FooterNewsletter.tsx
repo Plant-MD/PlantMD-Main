@@ -37,7 +37,7 @@ export default function FooterNewsletter() {
   };
 
   return (
-    <div className="mt-4 border-t border-gray-700 pt-8">
+    <div className="mt-4 border-t border-gray-700 pt-8 ">
       <h3 className="text-xl font-semibold mb-4 text-white font-sans">Newsletter</h3>
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <p className="text-sm text-gray-300 mb-2 sm:mb-0">Subscribe to our newsletter for updates.</p>
@@ -53,7 +53,7 @@ export default function FooterNewsletter() {
           />
           <button
             type="submit"
-            className="bg-green text-white rounded-l-none rounded-r-md text-sm whitespace-nowrap hover:bg-light-dark transition-colors duration-200 px-4 py-2"
+            className="bg-warning-red text-white rounded-l-none rounded-r-md text-sm whitespace-nowrap hover:bg-light-dark transition-colors duration-200 px-4 py-2"
             disabled={isLoading}
           >
             {isLoading ? "Subscribing..." : "Subscribe"}
