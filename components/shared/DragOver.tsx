@@ -47,7 +47,7 @@ function DragOverComponent({
 
   return (
     <div
-      className={`group relative mx-auto max-w-md transition-all duration-300 ${
+      className={`group mx-auto max-w-md transition-all duration-300 ${
         isDragOver ? "scale-105" : "hover:scale-102"
       } ${className}`}
       onDragOver={handleDragOver}
