@@ -19,15 +19,15 @@ function MainDiagnosis(props: DiseaseResponse) {
   const formattedPlants = disease.common_plants.join(", ");
 
   return (
-    <div className="mt-8">
+    <div className="mt-10 px-4 sm:px-6 md:px-8 w-full max-w-6xl mx-auto ">
       {/* Header */}
-      <div className="text-6xl font-oswald font-bold text-gray-600 mb-5">
+      <div className="text-4xl mt-20 sm:text-4xl md:text-5xl lg:text-6xl font-oswald font-bold text-gray-600 mb-4 sm:mb-6">
         {disease.disease_name.replace(/_/g, " ")}
       </div>
 
       {/* Body Description */}
-      <div className="px-6 py-5 space-y-5">
-        <p className="text-gray-700 text-sm leading-relaxed">
+      <div className="bg-white px-4 py-4 sm:px-6 sm:py-5 space-y-4 text-sm sm:text-base leading-relaxed text-gray-700 rounded-xl shadow-sm">
+        <p>
           This condition is categorized under{" "}
           <span className="font-semibold">{disease.category}</span>. It is
           commonly seen in the following plants:{" "}
@@ -59,14 +59,14 @@ function MainDiagnosis(props: DiseaseResponse) {
       </div>
 
       {/* Summary Table */}
-      <div className="px-6 mt-4">
+      <div className="mt-6 overflow-x-auto">
         <table className="w-full text-sm text-right text-gray-700 border border-gray-200 rounded-md overflow-hidden">
           <tbody>
             <tr className="border-b">
-              <th className="px-4 py-2 text-left font-medium bg-gray-50">
+              <th className="px-4 py-2 text-left font-medium bg-gray-50 w-1/2 min-w-[150px]">
                 Disease Name
               </th>
-              <td className="px-4 py-2">
+              <td className="px-4 py-2 break-words">
                 {disease.disease_name.replace(/_/g, " ")}
               </td>
             </tr>
@@ -109,14 +109,14 @@ function MainDiagnosis(props: DiseaseResponse) {
       </div>
 
       {/* Cures */}
-      <div className="bg-green-50 px-6 py-5 rounded-b-3xl mt-8">
-        <h3 className="text-2xl flex items-center gap-2 text-forest-green mb-2">
+      <div className="bg-green-50 px-4 py-5 sm:px-6 rounded-b-3xl mt-6 sm:mt-8">
+        <h3 className="text-xl sm:text-2xl flex items-center gap-2 text-forest-green mb-2">
           <HeartPulse className="w-5 h-5" />
           Suggested Treatments
         </h3>
 
         {cure.cure.length > 0 ? (
-          <ul className="list-disc pl-5 text-gray-700 text-sm space-y-1">
+          <ul className="list-disc pl-5 text-gray-700 text-sm sm:text-base space-y-1">
             {cure.cure.slice(0, 3).map((c, i) => (
               <li key={i}>{c}</li>
             ))}

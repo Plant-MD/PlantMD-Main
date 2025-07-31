@@ -95,11 +95,12 @@ function Diagnosis() {
           <div className="space-y-6">
             <MainDiagnosis {...plants[0]} />
             <div className="text-left mb-8">
-              <h2 className="text-5xl font-oswald font-bold text-gray-600 mb-2">
-                More Results Results
+              <h2 className="text-4xl font-oswald font-bold text-gray-600 mb-2 ml-2">
+                More Results
               </h2>
+
             </div>
-            
+
             {plants.slice(1, 3).map((plant, index) => (
               <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
                 <DiagnosisCard {...plant} />
