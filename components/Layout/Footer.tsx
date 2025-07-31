@@ -10,7 +10,7 @@ type SocialIconProps = {
 
 const SocialIcon = ({ Icon, href }: SocialIconProps) => (
   <a href={href} target="_blank" rel="noopener noreferrer">
-    <Icon size={24} className="cursor-pointer text-gray-300 hover:text-white transition-colors duration-200" />
+    <Icon size={24} className="cursor-pointer text-white hover:text-white transition-colors duration-200" />
   </a>
 );
 
@@ -24,7 +24,7 @@ const FooterLinkSection = ({ title, links }: FooterLinkSectionProps) => (
     {/* Centered text on small screens, left-aligned on medium and larger */}
     <h3 className="text-base font-semibold mb-4 text-white text-center md:text-left">{title}</h3>
     {/* Centered list items on small screens, left-aligned on medium and larger */}
-    <ul className="space-y-2 text-sm text-gray-300 text-center md:text-left">
+    <ul className="space-y-2 text-sm text-white text-center md:text-left">
       {links.map((link, index) => (
         <li key={index}>
           <Link href={link.href} className="hover:text-white transition-colors duration-200">
@@ -48,9 +48,8 @@ const Quick_Links = [
   { href: "", text: "Incubate Nepal 2025" },
 ];
 const Notices = [
-  { href: "", text: "Genral News" },
+  { href: "", text: "General News" },
   { href: "", text: "plantmd.xyz@gmail.com" },
-  { href: "", text: "+977 9800000000" },
 ];
 
 const socialIcons = [
@@ -61,11 +60,11 @@ const socialIcons = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-black text-gray-300 py-16 px-4 sm:px-6 md:px-8 lg:px-12" id="footer">
+    <footer className="relative bg-deep-mint text-white py-16 px-4 sm:px-6 md:px-8 lg:px-12" id="footer">
       {/* Wave SVG at the top */}
       <div className="absolute top-0 left-0 w-full">
         <svg 
-          className="relative block w-full h-20 md:h-24 lg:h-32" 
+          className="relative block w-full h-20 md:h-24 lg:h-32 leading-none" 
           data-name="Layer 1" 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 1200 120" 
@@ -87,7 +86,7 @@ export default function Footer() {
             {/* Logo and Description - occupies 1 column on small screens, 1 on medium+ */}
             <div className="md:col-span-1 ">
               <h2 className="text-4xl font-bold mb-4 font-oswald text-white text-center md:text-left">PlantMD</h2>
-              <p className="text-sm text-gray-300 mb-6 font-roboto mx-auto md:mx-0 max-w-xs text-center md:text-left "> {/* Added mx-auto for centering */}
+              <p className="text-sm text-white mb-6 font-roboto mx-auto md:mx-0 max-w-xs text-center md:text-left "> {/* Added mx-auto for centering */}
                 Diagnose plant diseases instantly and get reliable treatment methods.
               </p>
               <div className="flex gap-4 justify-center md:justify-start">
@@ -100,7 +99,7 @@ export default function Footer() {
             {/* Link Sections - occupies 2 columns on medium+ screens, side by side */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:ml-20  font-roboto text-center"> {/* Changed to grid for better control */}
               <FooterLinkSection title="Quick Links" links={Quick_Links} />
-              <FooterLinkSection title="Contack Us" links={Notices} />
+              <FooterLinkSection title="Contact Us" links={Notices} />
             </div>
           </div>
 
