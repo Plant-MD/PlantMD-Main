@@ -32,12 +32,15 @@ export default function FeedbackPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 lg:py-[125px] px-4">
       <div className="max-w-2xl mx-auto">
+      <h2 className="text-5xl font-oswald font-bold text-gray-600 mb-2">
+        Give Your Feedback
+      </h2>
 
-        <FeedbackForm 
-          userEmail={session.user.email} 
-          userId={session.user._id} 
+        <FeedbackForm
+          userEmail={session.user.email}
+          userId={session.user._id}
         />
 
         <div className="text-center mt-8">

@@ -98,7 +98,7 @@ export default function FeedbackForm({ userEmail, userId }: FeedbackFormProps) {
   }
 
   return (
-    <Card className="shadow-xl border-0 bg-soft-beige backdrop-blur-sm">
+    <Card className="border-none bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 backdrop-blur-sm">
       <CardContent className="p-8">
         <form onSubmit={handleSubmit} className="space-y-8">
           <FeedbackTypeSelector
@@ -128,7 +128,7 @@ export default function FeedbackForm({ userEmail, userId }: FeedbackFormProps) {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-12 text-base font-semibold bg-leaf-green text-white hover:bg-leaf-green shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:transform-none disabled:opacity-50"
+            className="w-full h-12 text-base font-semibold bg-deep-mint text-white hover:bg-deep-mint shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02] disabled:transform-none disabled:opacity-50"
           >
             {isSubmitting ? (
               <div className="flex items-center space-x-2">
