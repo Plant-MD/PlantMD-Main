@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useCamera } from '@/hooks/useCamera';
@@ -14,6 +14,14 @@ export const useHeroAnalysis = () => {
 
   const cameraHook = useCamera();
   const uploadHook = useImageUpload();
+
+  // Load plant type from localStorage on component mount
+  useEffect(() => {
+    const storedPlantType = localStorage.getItem('selectedPlantType') as 'tomato' | 'corn';
+    if (storedPlantType) {
+      setSelectedPlant(storedPlantType);
+    }
+  }, []);
 
   const dataURLtoBlob = (dataURL: string) => {
     const arr = dataURL.split(',');
@@ -49,10 +57,16 @@ export const useHeroAnalysis = () => {
     uploadHook.browseFiles();
   };
 
-  const handleAnalyze = async () => {
+  const handleAnalyze = async (plantType?: 'tomato' | 'corn') => {
+    const plantToAnalyze = plantType || selectedPlant;
+    console.log('handleAnalyze called with plant type:', plantToAnalyze);
 
-    if (!uploadHook.selectedImage) return;
+    if (!uploadHook.selectedImage) {
+      console.error('No image available for analysis');
+      return;
+    }
 
+    console.log('Starting analysis with image and plant type:', plantToAnalyze);
     setIsProcessing(true);
     
     const formData = new FormData();
@@ -60,22 +74,30 @@ export const useHeroAnalysis = () => {
     try {
       const blob = dataURLtoBlob(uploadHook.selectedImage);
       formData.append('file', blob, 'plant.jpg');
-      formData.append('plant', selectedPlant);
+      formData.append('plant', plantToAnalyze);
 
+      console.log('Sending request to /api/analyze');
       const response = await fetch('/api/analyze', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('API response status:', response.status);
+
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error('API error response:', errorText);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('API response data:', data);
       
       if (data.success && data.predictions) {
-        router.push(`/diagnosis?predictions=${encodeURIComponent(JSON.stringify(data.predictions))}&plant=${selectedPlant}`);
+        console.log('Redirecting to diagnosis page with predictions');
+        router.push(`/diagnosis?predictions=${encodeURIComponent(JSON.stringify(data.predictions))}&plant=${plantToAnalyze}`);
       } else {
+        console.error('Invalid response structure:', data);
         throw new Error('Invalid response from analysis service');
       }
       
@@ -92,8 +114,10 @@ export const useHeroAnalysis = () => {
     setShowCamera(false);
   };
 
+  // Save plant type to localStorage whenever it changes
   const handlePlantChange = (plant: 'tomato' | 'corn') => {
     setSelectedPlant(plant);
+    localStorage.setItem('selectedPlantType', plant);
   };
 
   const handleDismissError = () => {

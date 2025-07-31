@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Analyze API route called');
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const plant = formData.get('plant') as string;
 
     console.log('Received request with plant type:', plant);
+    console.log('File received:', file ? { name: file.name, size: file.size, type: file.type } : 'No file');
 
     if (!file) {
+      console.error('No file provided in request');
       return NextResponse.json(
         { error: 'No file provided' },
         { status: 400 }
@@ -16,6 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!plant || !['tomato', 'corn'].includes(plant)) {
+      console.error('Invalid plant type:', plant);
       return NextResponse.json(
         { error: 'Invalid plant type. Must be either "tomato" or "corn"' },
         { status: 400 }
@@ -23,6 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (!file.type.startsWith('image/')) {
+      console.error('Invalid file type:', file.type);
       return NextResponse.json(
         { error: 'Invalid file type. Please upload an image.' },
         { status: 400 }
@@ -31,6 +36,7 @@ export async function POST(request: NextRequest) {
 
     const maxSize = 10 * 1024 * 1024;
     if (file.size > maxSize) {
+      console.error('File too large:', file.size);
       return NextResponse.json(
         { error: 'File too large. Maximum size is 10MB.' },
         { status: 400 }
@@ -96,6 +102,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log('Successfully processed analysis, returning predictions');
     return NextResponse.json({
       success: true,
       predictions: data.predictions,
