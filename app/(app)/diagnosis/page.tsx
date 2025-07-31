@@ -5,6 +5,7 @@ import axios from "axios";
 import { Leaf, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import MainDiagnosis from "@/components/shared/Diagnosis";
 
 
 function Diagnosis() {
@@ -125,13 +126,14 @@ function Diagnosis() {
           </div>
         ) : plants.length > 0 ? (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-5xl font-oswald font-bold text-gray-900 mb-2">
-                Analysis Complete
+            <MainDiagnosis {...plants[0]} />
+            <div className="text-left mb-8">
+              <h2 className="text-5xl font-oswald font-bold text-gray-600 mb-2">
+                More Results Results
               </h2>
             </div>
             
-            {plants.map((plant, index) => (
+            {plants.slice(1, 3).map((plant, index) => (
               <div key={index} className="animate-fade-in" style={{ animationDelay: `${index * 100}ms` }}>
                 <DiagnosisCard {...plant} />
               </div>

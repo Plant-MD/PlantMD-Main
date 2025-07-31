@@ -27,25 +27,29 @@ function DiagnosisCard(props: DiseaseResponse) {
     <div className="cursor-pointer mt-8" onClick={handleFlip}>
       {/* Front Side - Disease Information */}
       <div>
-        <div className="text-xl font-bold text-white bg-forest-green py-4 px-6 rounded-t-xl flex justify-start items-center gap-2">
-          {props.disease.disease_name}
+        <div className="text-xl font-bold text-white bg-deep-mint py-4 px-6 rounded-t-sm flex justify-start items-center gap-2">
+          {props.disease.disease_name.replace(/_/g, " ")}
           <span className="font-roboto">
             ({props.disease.scientific_name})
+
             <Badge
               variant="secondary"
               className="text-xs font-light font-mono bg-white text-black hover:bg-white ml-2"
             >
               {getConfidenceLabel(props.confidence)}
             </Badge>
+            <div className='inline ml-2 font-roboto'>
+            {props.confidence}%
+            </div>
           </span>
         </div>
       </div>
 
       {!isFlipped && (
         <>
-          <div className="w-full h-full shadow-lg flex border rounded-b-3xl">
+          <div className="w-full h-full shadow-lg flex border rounded-b-3xl min-h-[178px]">
             <div className="flex flex-col gap-4 p-6">
-              <div className="flex flex-wrap gap-5">
+              <div className="flex flex-wrap gap-6">
                 <div className="text-black">
                   <Badge variant="secondary" className="text-xs font-light font-mono">Code</Badge>
                   <span className="font-roboto text-sm"> {props.disease.disease_code}</span>
@@ -65,8 +69,7 @@ function DiagnosisCard(props: DiseaseResponse) {
               </div>
               <p className="text-xs text-black italic mt-auto">Click to view cures</p>
             </div>
-            <div className="w-full text-4xl font-oswald flex flex-col items-center justify-center">
-              {formatConfidence(props.confidence)}%
+            <div className="text-4xl font-oswald flex flex-col items-center justify-center w-1/3">
             </div>
           </div>
         </>
