@@ -126,12 +126,9 @@ function Diagnosis() {
         ) : plants.length > 0 ? (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+              <h2 className="text-5xl font-oswald font-bold text-gray-900 mb-2">
                 Analysis Complete
               </h2>
-              <p className="text-gray-600">
-                We found {plants.length} potential disease{plants.length > 1 ? 's' : ''} in your {plantType} plant
-              </p>
             </div>
             
             {plants.map((plant, index) => (
