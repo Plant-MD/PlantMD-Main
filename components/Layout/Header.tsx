@@ -35,7 +35,7 @@ function Header() {
     }
 
     return (
-        <nav className="sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-sage/20 py-2">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-sage/20 py-2">
             <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
                 <div className="flex justify-between items-center h-14 sm:h-16">
                     <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group justify-around">
@@ -77,7 +77,7 @@ function Header() {
                         {session ? (
                             <Button
                                 onClick={() => signOut()}
-                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
+                                className="bg-deep-mint hover:bg-deep-mint text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
                             >
                                 <LogOut className="h-4 w-4 mr-2" />
                                 Sign Out
@@ -85,7 +85,7 @@ function Header() {
                         ) : (
                             <Button
                                 onClick={() => signIn('google')}
-                                className="bg-plant-dark hover:bg-gray-800 text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
+                                className="bg-deep-mint hover:bg-deep-mint text-white px-4 lg:px-6 py-2 rounded-md transition-colors font-roboto text-md"
                             >
                                 <LogIn className="h-4 w-4 mr-2" />
                                 Sign In
@@ -125,7 +125,7 @@ function Header() {
                             <Link
                                 href="/feedback"
                                 onClick={closeMenu}
-                                className="block mx-4 bg-white border-2 border-green-600 text-green-700 px-4 py-2 rounded-md transition-colors font-roboto text-center"
+                                className="block mx-4 bg-white border-2 border-green-600 text-leaf-green px-4 py-2 rounded-md transition-colors font-roboto text-center"
                             >
                                 Give Feedback
                             </Link>
